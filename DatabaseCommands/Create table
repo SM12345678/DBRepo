@@ -1,0 +1,28 @@
+--first create contactdb and table and then grant sql user privilage to connect to db from website
+
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `country` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8
+
+
+INSERT INTO `contactdb`.`contact`
+(
+`name`,
+`email`,
+`country`)
+VALUES
+(
+'Tom',
+'Tom@gmail.com',
+'USA');
+
+
+
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'welcom1234';
+GRANT ALL PRIVILEGES ON contactDB.* TO 'user'@'localhost';
+
