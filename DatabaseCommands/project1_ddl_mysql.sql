@@ -291,7 +291,7 @@ BEGIN
         sponsor_id = NEW.sponsor_id;
         
         IF ( d IS NULL OR d <> 'I' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Individual_SM_Sponsors_FK in Table SM_Individual violates Arc constraint on Table SM_Sponsors - discriminator column sponsor_type doesn''t have value ''I''';
+			signal sqlstate '20223' set message_text =  'SM_Individual violates Arc constraint on Table SM_Sponsors - discriminator column sponsor_type doesn''t have value ''I''';
         end if;
     
     -- statements
@@ -316,7 +316,7 @@ BEGIN
         sponsor_id = NEW.sponsor_id;
         
         IF ( d IS NULL OR d <> 'I' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Individual_SM_Sponsors_FK in Table SM_Individual violates Arc constraint on Table SM_Sponsors - discriminator column sponsor_type doesn''t have value ''I''';
+			signal sqlstate '20223' set message_text =  'SM_Individual violates Arc constraint on Table SM_Sponsors - discriminator column sponsor_type doesn''t have value ''I''';
         end if;
     
     -- statements
@@ -342,7 +342,7 @@ BEGIN
         sponsor_id = NEW.sponsor_id;
         
         IF ( d IS NULL OR d <> 'O' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Organization_SM_Sponsors_FK in Table SM_Organization violates Arc constraint on Table SM_Sponsors - discriminator column sponsor_type doesn''t have value ''O''';
+			signal sqlstate '20223' set message_text =  'SM_Sponsors - discriminator column sponsor_type doesn''t have value ''O''';
         end if;
     
     -- statements
@@ -367,7 +367,7 @@ BEGIN
         sponsor_id = NEW.sponsor_id;
         
         IF ( d IS NULL OR d <> 'O' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Organization_SM_Sponsors_FK in Table SM_Organization violates Arc constraint on Table SM_Sponsors - discriminator column sponsor_type doesn''t have value ''O''';
+			signal sqlstate '20223' set message_text =  'SM_Sponsors - discriminator column sponsor_type doesn''t have value ''O''';
         end if;
     
     -- statements
@@ -393,7 +393,7 @@ BEGIN
         event_id = new.event_id;
         
         IF ( d IS NULL OR d <> 'S' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Seminar_SM_Events_FK in Table SM_Seminar violates Arc constraint on Table SM_Events - discriminator column event_type doesn''t have value ''S''';
+			signal sqlstate '20223' set message_text =  'SM_Events - discriminator column event_type doesn''t have value ''S''';
         end if;
     
     -- statements
@@ -418,7 +418,7 @@ BEGIN
         event_id = new.event_id;
         
         IF ( d IS NULL OR d <> 'S' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Seminar_SM_Events_FK in Table SM_Seminar violates Arc constraint on Table SM_Events - discriminator column event_type doesn''t have value ''S''';
+			signal sqlstate '20223' set message_text =  'SM_Events - discriminator column event_type doesn''t have value ''S''';
         end if;
     
     -- statements
@@ -443,7 +443,7 @@ BEGIN
         event_id = new.event_id;
         
         IF ( d IS NULL OR d <> 'E' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Exhibition_SM_Events_FK in Table SM_Exhibition violates Arc constraint on Table SM_Events - discriminator column event_type doesn''t have value ''E''';
+			signal sqlstate '20223' set message_text =  'SM_Events - discriminator column event_type doesn''t have value ''E'' but has';
         end if;
     
     -- statements
@@ -468,7 +468,7 @@ BEGIN
         event_id = new.event_id;
         
         IF ( d IS NULL OR d <> 'E' ) THEN
-			signal sqlstate '20223' set message_text =  'FK SM_Exhibition_SM_Events_FK in Table SM_Exhibition violates Arc constraint on Table SM_Events - discriminator column event_type doesn''t have value ''E''';
+			signal sqlstate '20223' set message_text =  'SM_Events - discriminator column event_type doesn''t have value ''E''';
         end if;
     
     -- statements
@@ -485,7 +485,6 @@ CREATE TRIGGER tu_SM_invoice
 BEGIN
 
 DECLARE  invoice_amount float;
-
 if (new.actual_return_date IS NOT NULL 
 	AND new.actual_return_date<>old.actual_return_date) then
 	 IF (new.actual_return_date<=new.expected_return_date) THEN
@@ -498,3 +497,4 @@ if (new.actual_return_date IS NOT NULL
 	 values (cast(invoice_amount as decimal(7,2)), new.rental_id , now());
 end if;
 END$$
+

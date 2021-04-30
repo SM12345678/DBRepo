@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+	<title>Developers database</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>invitations</h1>
+	<table>
+		<tr>
+			<th>Invitation Id</th>
+			<th>Author Id</th>
+			<th>Event Id</th>
+		</tr>
+		<tr th:each="invitation : ${invitations}">
+			<td th:text="${invitation.invitationId}"></td>
+			<td th:text="${invitation.authorId}"></td>
+			<td th:text="${invitation.eventId}"></td>
+		<!--	<td>
+				<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
+			</td> -->
+		</tr>
+	</table>
+	<hr/>
+	
+	<form th:action="@{/invitations}" method="post" enctype="multipart/form-data">
+		<div>
+			Author Id: <input name="authorId" />
+		</div>
+		<div>
+			Event Id: <input name="eventId" />
+		</div>
+		<div>
+			<input type="submit" value="Create Invitation" name="button"/>
+		</div>
+	</form>
+	
+</body>
+</html>
