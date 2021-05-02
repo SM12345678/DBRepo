@@ -1,19 +1,31 @@
 package com.db.library.model;
 
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "sm_authors")
 public class Author {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="author_id")
 	private int authorId;
+	@Column(name="first_Name")
 	private String firstName;
+	@Column(name="last_Name")
 	private String lastName;
+	@Column(name="st_Address")
 	private String stAddress;
 	private String city;
 	private String state;
@@ -99,7 +111,23 @@ public class Author {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-		
+	
+	 @ManyToMany(mappedBy="authors")
+	 private Set<Book> books;
+	 
+	 @JsonBackReference
+	 public Set<Book> getBooks() {
+			return books;
+		}
+	 public void setBooks(Set<Book> books) {
+			this.books = books;
+		}
+	 
+	 @Transient
+	 public String fullName;
+	 public void setfullName() {
+			this.fullName = this.firstName +" "+this.lastName;
+		}	
 }
 
 

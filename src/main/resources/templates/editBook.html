@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Online Library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], select {
+        display: inline-block;
+        width: 200px;
+    }
+    input[type=radio] {
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        margin-right: 190px;
+    }  
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+	<h1>Edit Book</h1>
+	<hr />
+	
+<form  th:action="@{/books/edit}" method="post" th:object="${book}" class="form-group" id="#form">		
+	 <div>
+			Book Name: <input th:field="*{bookName}" /> 
+			</div>
+			</br>
+			 <div>
+			  <!-- <th:select path="topicId" items="${topics}" /> -->
+			Book Topic: <select th:field="*{topicid}">
+			 <option th:value="0">nothing selected</option>
+            <option th:each="p : ${topics}" th:value="${p.id}" th:text="${p.topicName}"  />
+           </select>
+         <a th:href="@{/books/add}">Go to add topic to include new topic in the list</a>
+         </Div> 
+			
+			<div>
+			</br>
+			Book Author: 
+			<select id="authorids" name="authorids" th.value="*{authorids}" multiple="true">
+			 <option value="">nothing selected</option>
+            <option th:each="p : ${authors}" th:value="${p.authorId}" th:text="${p.fullName}" th:selected="${book.authorids.contains(p.authorId)}" />
+            </select>
+        <a th:href="@{/books/add}">Go to add author to include new author in the list</a></Div> 
+		
+		
+		 <input th:field="*{id}" style="display:none"/>
+		<div>
+		<input type="submit" id="submit" value="Update Book"/>
+		</div>
+	</form>
+
+
+</body>
+</html>

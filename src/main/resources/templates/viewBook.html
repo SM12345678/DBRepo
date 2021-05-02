@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Online Library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], select {
+        display: inline-block;
+        width: 200px;
+    }
+    input[type=radio] {
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        margin-right: 190px;
+    }  
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+
+<table>
+		<tr>
+			<th>Name</th>
+			<th>Topic</th>
+			<th>Author(s)</th>
+
+
+		</tr>
+		<tr>
+			<td th:text="${book.bookName}"></td>
+			<td th:text="${book.topic.topicName}"></td>
+			 <td th:text="${book.authorsString}"></td>
+			
+			 <td><a th:href=@{/books/edit(id=${book.id})}>Edit Book</a>
+			<!--   <a th:href=@{/books/edit?id=${book.id}}>Edit Book</a> -->
+			  </td>
+		</tr>
+		<tr><td><a th:href="@{/books}">Go to book list</a></td></tr> 
+	</table>
+
+
+</body>
+</html>
