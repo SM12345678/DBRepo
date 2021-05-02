@@ -1,7 +1,6 @@
 package com.db.library.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -76,15 +75,10 @@ public class Book implements Serializable {
 	  public void setTopic(Topic topic) { this.topic = topic; }
 	 
 	
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(
-            name = "sm_book_author",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "author_id")}
-    )
-	//@JoinTable(name="sm_book_author", joinColumns={@JoinColumn(referencedColumnName="book_id")}
-    //,inverseJoinColumns={@JoinColumn(referencedColumnName="author_id")})  
-     private Set<Author> authors = new HashSet<>();
+	@ManyToMany(cascade=CascadeType.MERGE)
+	@JoinTable(name="SM_Book_Author", joinColumns={@JoinColumn(referencedColumnName="book_id")}
+    ,inverseJoinColumns={@JoinColumn(referencedColumnName="author_id")})  
+     private Set<Author> authors;
 	
 	 @JsonManagedReference
 	 public Set<Author> getAuthors() {
@@ -92,6 +86,10 @@ public class Book implements Serializable {
 		}
 	 public void setAuthors(Set<Author> authors) {
 		 this.authors=authors;
+		}
+	 
+	 public void setBooks(Set<Author> authors) {
+			this.authors = authors;
 		}
 	
     @Transient 
@@ -103,7 +101,7 @@ public class Book implements Serializable {
 		{
 			s+=","+ a.getFirstName()+" "+a.getLastName();
 		}
-        return s;
+        return s.substring(1);
     }	
 	public void setAuthorsString() {
 		String s="";
@@ -111,8 +109,7 @@ public class Book implements Serializable {
 		{
 			s+=","+ a.getFirstName()+" "+a.getLastName();
 		}
-		
-		this.authorsString= s;
+		this.authorsString= s.substring(1);
     }	
 	
 	@Column(name="topic_id")

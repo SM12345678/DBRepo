@@ -37,7 +37,7 @@
 			</br>
 			 <div>
 			  <!-- <th:select path="topicId" items="${topics}" /> -->
-			Book Topic: <select th:field="*{topic.topicId}">
+			Book Topic: <select th:field="*{topicid}">
 			 <option th:value="0">nothing selected</option>
             <option th:each="p : ${topics}" th:value="${p.topicId}" th:text="${p.topicName}"  />
            </select>
