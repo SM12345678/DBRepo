@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head> 
-	<title>Developers database</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head th:insert="index :: header"> 
+	
 </head>
 <body>
 	<h1>Authors</h1>
@@ -54,6 +53,7 @@
 			<input type="submit" value="Create author" name="button"/>
 		</div>
 	</form>
-	
+	<span th:insert="index::footer">
+	</span>
 </body>
 </html>

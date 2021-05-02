@@ -4,17 +4,13 @@
 	
 </head>
 <body>
-	<h1>invitations</h1>
+	<h1>seminars</h1>
 	<table>
 		<tr>
-			<th>Invitation Id</th>
-			<th>Author Id</th>
 			<th>Event Id</th>
 		</tr>
-		<tr th:each="invitation : ${invitations}">
-			<td th:text="${invitation.invitationId}"></td>
-			<td th:text="${invitation.authorId}"></td>
-			<td th:text="${invitation.eventId}"></td>
+		<tr th:each="seminar : ${seminars}">
+			<td th:text="${seminar.eventId}"></td>
 		<!--	<td>
 				<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
 			</td> -->
@@ -22,10 +18,7 @@
 	</table>
 	<hr/>
 	
-	<form th:action="@{/invitations}" method="post" enctype="multipart/form-data">
-		<div>
-			Author Id: <input name="authorId" />
-		</div>
+	<form th:action="@{/seminars}" method="post" enctype="multipart/form-data">
 		<div>
 			Event Id: <input name="eventId" />
 		</div>

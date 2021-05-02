@@ -10,38 +10,36 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sm_topics")
-public class Topic implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public Topic() {
-		// TODO Auto-generated constructor stub
-	}
-	public Topic(String topicName) {
-		// TODO Auto-generated constructor stub
-		this.topicName=topicName;
-	}
-	
+@Table(name="sm_topics")
+public class Topic {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="topic_id")
-	private int id;
-	
-	@Column(name="topic_name")
+	private Integer topicId;
 	private String topicName;
-
-	public int getId() {
-		return id;
+	
+	public Topic() {
+		
 	}
+	
+	public Topic(Integer topicId, String topicName) {
+		this.topicId = topicId;
+		this.topicName = topicName;
+	}	
+		
+	public Integer getTopicId() {
+		return topicId;
+	}
+
+	public void setTopicId(Integer topicId) {
+		this.topicId = topicId;
+	}
+
 	public String getTopicName() {
 		return topicName;
 	}
+
 	public void setTopicName(String topicName) {
 		this.topicName = topicName;
-	}
-
+	}	
+	
 }

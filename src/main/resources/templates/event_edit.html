@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+		
+	<div class="container">
+		<form th:action="@{/events/update}" method="post" enctype="multipart/form-data">
+		   
+    	   <div class="row">
+				<div class="col-md-6">
+				  <input class="form-control" id="eventType"  name="eventType"  th:value="${event.eventType}" hidden>
+				  <input class="form-control" id="eventId"  name="eventId"  th:value="${event.eventId}" hidden>
+				</div>
+		   </div>	
+		   <div class="row">
+				<div class="col-md-6">
+				  <label for="eventName" class="form-label">Event Name</label>
+				  <input class="form-control" id="eventName"  name="eventName" placeholder="Event Name" th:value="${event.eventName}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventStartDatetime" class="form-label">Event StartDateTime</label>				  
+				  <input class="form-control" id="eventStartDatetime"  name="eventStartDatetime" placeholder="Event Name" th:value="${event.eventStartDatetime}">
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventStopDatetime" class="form-label">Event StopDateTime</label>
+				  <input class="form-control" id="eventStopDatetime"  name="eventStopDatetime" placeholder="Event Name" th:value="${event.eventStopDatetime}">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="expenses" class="form-label">Expenses</label>
+				  <input class="form-control" id="expenses"  name="expenses" placeholder="expenses" th:value="*{event.exhibition != null}? *{event.exhibition.expenses} : '0.0'">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventType" class="form-label">Select Topic</label>
+				  <select class="form-select" name="topicId">
+					  <option th:each="topic : ${listOfTopics}" th:value="${topic.topicId}"th:text="${topic.topicName}" th:selected="${topic.topicId==event.topic.topicId}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Create event" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+	
+	<script>
+	    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+	        icons: {
+	            time: 'far fa-clock',
+	            date: 'far fa-calendar',
+	            up: 'fas fa-arrow-up',
+	            down: 'fas fa-arrow-down',
+	            previous: 'fas fa-chevron-left',
+	            next: 'fas fa-chevron-right',
+	            today: 'far fa-calendar-check-o',
+	            clear: 'far fa-trash',
+	            close: 'far fa-times'
+	        } });
+		
+	    
+
+	    
+	</script>
+</body>
+</html>
+

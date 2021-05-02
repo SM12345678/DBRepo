@@ -29,7 +29,7 @@ public class ExhibitionController {
 	
 	
 	@RequestMapping(value="/create",method=RequestMethod.POST)
-	public String authorsAdd(@RequestParam int eventId, @RequestParam int expenses,  Model model) {	
+	public String authorsAdd(@RequestParam Integer eventId, @RequestParam Double expenses,  Model model) {	
 		Exhibition e1 = new Exhibition(eventId, expenses);
 		exhibitionRepository.save(e1);
 		model.addAttribute("exhibition", exhibitionRepository.findAll());
