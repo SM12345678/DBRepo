@@ -37,9 +37,9 @@
 			</br>
 			 <div>
 			  <!-- <th:select path="topicId" items="${topics}" /> -->
-			Book Topic: <select th:field="*{topicid}">
+			Book Topic: <select th:field="*{topic.topicId}">
 			 <option th:value="0">nothing selected</option>
-            <option th:each="p : ${topics}" th:value="${p.id}" th:text="${p.topicName}"  />
+            <option th:each="p : ${topics}" th:value="${p.topicId}" th:text="${p.topicName}"  />
            </select>
          <a th:href="@{/books/add}">Go to add topic to include new topic in the list</a>
          </Div> 

@@ -279,7 +279,7 @@ public class BookController {
 	    	else {
 	    		if(obj instanceof Topic)
 		    	{ Topic topic=(Topic)obj;
-		    	a.id=topic.getId();
+		    	a.id=topic.getTopicId();
 		    	a.text=topic.getTopicName();
 		      
 		    	}
