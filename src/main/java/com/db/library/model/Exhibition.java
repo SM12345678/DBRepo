@@ -1,8 +1,7 @@
 package com.db.library.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,31 +10,30 @@ import javax.persistence.Table;
 public class Exhibition {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int eventId;
-	private int expenses;
+	private Integer eventId;
+	private Double expenses;
 	
 	
 	public Exhibition() {
 		
 	}
 	
-	public Exhibition(int eventId, int expenses) {
+	public Exhibition(Integer eventId, Double expenses) {
 		this.eventId = eventId;
 		this.expenses = expenses;
 	}
 	
 	
-	public int getEventId() {
+	public Integer getEventId() {
 		return eventId;
 	}
-	public void setEventId(int eventId) {
+	public void setEventId(Integer eventId) {
 		this.eventId = eventId;
 	}
-	public int getExpenses() {
+	public Double getExpenses() {
 		return expenses;
 	}
-	public void setExpenses(int expenses) {
+	public void setExpenses(Double expenses) {
 		this.expenses = expenses;
 	}
 	

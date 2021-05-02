@@ -498,3 +498,28 @@ if (new.actual_return_date IS NOT NULL
 end if;
 END$$
 
+DELIMITER ;
+
+
+ALTER TABLE sm_events
+    drop column topic_id;
+
+ALTER TABLE sm_events
+    add column topic_id TINYINT;
+
+
+update sm_events set topic_id = sm_topics_topic_id  where event_id>0;
+
+ALTER TABLE sm_events
+    drop foreign key sm_events_sm_topics_fk;
+    
+
+ALTER TABLE sm_events
+    ADD CONSTRAINT sm_events_sm_topics_1_fk FOREIGN KEY (topic_id )
+        REFERENCES sm_topics ( topic_id );
+        
+ALTER TABLE sm_events
+    drop column  sm_topics_topic_id;
+    
+ALTER TABLE sm_events
+    modify column topic_id TINYINT not null;

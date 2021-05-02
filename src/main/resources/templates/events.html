@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+
+	<div class="container">
+		<h3>Events</h3>
+		<table class="table">
+			<tr>
+				<th>Event Id</th>
+				<th>Event Name</th>
+				<th>Event StartDateTime</th>
+				<th>Event StopDateTime</th>
+				<th>Topic name</th>
+				<th>Event Type</th>
+				<th>Expenses</th>
+			</tr>
+			<tr th:each="event : ${listOfEvents}">
+				<td th:text="${event.eventId}"></td>
+				<td th:text="${event.eventName}"></td>
+				<td th:text="${event.eventStartDatetime}"></td>
+				<td th:text="${event.eventStopDatetime}"></td>
+				<td th:text="${event.topic.topicName}"></td>
+				<td th:text="${event.eventType}"></td>
+				<td>
+					<span th:text="*{event.exhibition != null}? *{event.exhibition.expenses} : '-NA-'">NA</span>
+				</td>
+				<td>
+				  <a class="btn btn-primary" type="button" th:href="'/events/edit?eventId=' + ${event.eventId}" name="button">
+					Edit
+				  </a>
+				</td>
+				<td>
+					<a class="btn btn-danger" type="button" th:href="'/events/delete?eventId=' + ${event.eventId}" name="button">
+					Delete
+					</a>
+				</td>
+			<!--	<td>
+					<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
+				</td> -->
+			</tr>
+		</table>
+	</div>
+	<hr/>
+	
+	<div class="container">
+		<form th:action="@{/events}" method="post" enctype="multipart/form-data">
+		    <div class="row">
+				<div class="col-md-6">
+				  <label for="eventName" class="form-label">Event Name</label>
+				  <input class="form-control" id="eventName"  name="eventName" placeholder="Event Name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventStartDatetime" class="form-label">Event StartDateTime</label>				  
+				  <div class="input-group date" id="eventStartDatetime" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#eventStartDatetime"
+                                id="date" placeholder="Date" name="eventStartDatetime"/>
+                        <div class="input-group-append" data-target="#eventStartDatetime" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        </div>
+                    </div>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventStopDatetime" class="form-label">Event StopDateTime</label>
+				  <div class="input-group date" id="eventStopDatetime" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#eventStopDatetime"
+                                id="date" placeholder="Date" name="eventStopDatetime"/>
+                        <div class="input-group-append" data-target="#eventStopDatetime" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        </div>
+                  </div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventType" class="form-label">Select Event Type</label>
+				  <select class="form-select" name="eventType">
+					  <option value="S">Seminar</option>
+					  <option value="E">Exhibition</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="expenses" class="form-label">Expenses</label>
+				  <input class="form-control" id="expenses"  name="expenses" placeholder="expenses">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventType" class="form-label">Select Topic</label>
+				  <select class="form-select" name="topicId">
+					  <option th:each="topic : ${listOfTopics}" th:value="${topic.topicId}"th:text="${topic.topicName}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Create event" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+	
+	<script>
+	    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+	        icons: {
+	            time: 'far fa-clock',
+	            date: 'far fa-calendar',
+	            up: 'fas fa-arrow-up',
+	            down: 'fas fa-arrow-down',
+	            previous: 'fas fa-chevron-left',
+	            next: 'fas fa-chevron-right',
+	            today: 'far fa-calendar-check-o',
+	            clear: 'far fa-trash',
+	            close: 'far fa-times'
+	        } });
+	
+	    $('#eventStartDatetime').datetimepicker({
+	        format: 'DD/MM/YYYY h:mm A'
+	    });
+	    
+	    $('#eventStopDatetime').datetimepicker({
+	        format: 'DD/MM/YYYY h:mm A'
+	    });
+	    
+
+	    
+	</script>
+</body>
+</html>
+
