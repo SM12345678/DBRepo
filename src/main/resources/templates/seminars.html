@@ -4,29 +4,64 @@
 	
 </head>
 <body>
-	<h1>seminars</h1>
-	<table>
-		<tr>
-			<th>Event Id</th>
-		</tr>
-		<tr th:each="seminar : ${seminars}">
-			<td th:text="${seminar.eventId}"></td>
-		<!--	<td>
-				<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
-			</td> -->
-		</tr>
-	</table>
+<nav th:insert="index :: nav-header"> </nav>
+
+	<div class="container">
+		<h3>Events</h3>
+		<table class="table">
+			<tr>
+				<th>Seminar Id</th>
+				<th>Event Name</th>
+				<th>Seminar Sponsors</th>
+			</tr>
+			<tr th:each="seminar : ${listOfSeminars}">
+				<td th:text="${seminar.event.eventId}"></td>
+				<td>
+					<a th:href="'/events/edit?eventId=' + ${seminar.event.eventId}" name="button" th:text="${seminar.event.eventName}">
+						Edit
+				  	</a>
+				</td>
+				<td>
+					<ul class="list-group list-group-flush">
+					  <li class="list-group-item" th:each="seminarSponsor : ${seminar.seminarSponsors}">
+					  	<span th:if="${seminarSponsor.sponsor.individual}" th:text="${'I - '+seminarSponsor.sponsor.individual.firstName + ' '+seminarSponsor.sponsor.individual.lastName}"> I </span>
+					  	<span th:if="${seminarSponsor.sponsor.organization}" th:text="${'O - '+seminarSponsor.sponsor.organization.orgName}"> O </span>
+					  	<span th:text="' AMT-' + ${seminarSponsor.amount}"></span>
+				  		<a th:href="'/seminars/removesponsor?eventId=' + ${seminar.event.eventId}+'&sponsorId='+${seminarSponsor.sponsor.sponsorId} " name="button" class="btn-danger">
+							x
+					  	</a>
+					  	
+					  </li>
+					  <li>
+					  	<form th:action="@{/seminars/addSponsor}" method="post" enctype="multipart/form-data">						    
+							<div class="row">
+									<input class="form-control" id="eventId"  name="eventId"  th:value="${seminar.event.eventId}" hidden>
+									<select class="form-select" name="sponsorId">
+										  <option th:each="sponsor : ${listOfSponsors}" th:value="${sponsor.sponsorId}">
+										  	<span th:if="${sponsor.individual}" th:text="${'I - '+sponsor.individual.firstName + ' '+sponsor.individual.lastName}"> I </span>
+					  						<span th:if="${sponsor.organization}" th:text="${'O - '+sponsor.organization.orgName}"> O </span>
+										  </option>
+									</select>
+									<input id="amount"  name="amount"  placeholder="Amount"/>
+									<input class="btn btn-primary btn-sm" type="submit" value="Add" name="button"/>
+							</div>
+							
+						</form>
+					  </li>
+					  
+					</ul>
+				</td>
+				<td>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<hr/>
-	
-	<form th:action="@{/seminars}" method="post" enctype="multipart/form-data">
-		<div>
-			Event Id: <input name="eventId" />
-		</div>
-		<div>
-			<input type="submit" value="Create Invitation" name="button"/>
-		</div>
-	</form>
+
 	<span th:insert="index::footer">
 	</span>
+	    
+	</script>
 </body>
 </html>
+

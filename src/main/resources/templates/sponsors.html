@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+
+	<div class="container">
+		<h3>Sponsors</h3>
+		<table class="table">
+			<tr>
+				<th>Sponsor Id</th>
+				<th>Sponsor Type</th>
+				<th>Sponsor Name</th>
+			</tr>
+			<tr th:each="sponsor : ${listOfSponsors}">
+				<td th:text="${sponsor.sponsorId}"></td>
+				<td>
+					<span th:if="${sponsor.individual}" th:text="${sponsor.individual.firstName + ' '+sponsor.individual.lastName}"> I </span>
+					 <span th:if="${sponsor.organization}" th:text="${sponsor.organization.orgName}"> O </span>
+				</td>
+				<td th:text="${sponsor.sponsorType}"></td>
+				<td>
+				  <a class="btn btn-primary" type="button" th:href="'/sponsors/edit?sponsorId=' + ${sponsor.sponsorId}" name="button">
+					Edit
+				  </a>
+				</td>
+				<td>
+					<a class="btn btn-danger" type="button" th:href="'/sponsors/delete?sponsorId=' + ${sponsor.sponsorId}" name="button">
+					Delete
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<hr/>
+	
+	<div class="container">
+		<form th:action="@{/sponsors}" method="post" enctype="multipart/form-data">
+		    <div class="row">
+				<div class="col-md-6">
+				  <label for="firstName" class="form-label">First Name</label>
+				  <input class="form-control" id="firstName"  name="firstName" placeholder="First Name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="lastName" class="form-label">First Name</label>
+				  <input class="form-control" id="lastName"  name="lastName" placeholder="Last Name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="orgName" class="form-label">First Name</label>
+				  <input class="form-control" id="orgName"  name="orgName" placeholder="Org Name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="sponsorType" class="form-label">Select Sponsor Type</label>
+				  <select class="form-select" name="sponsorType">
+					  <option value="I">Individual</option>
+					  <option value="O">Orgnization</option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Create Sponsor" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+	
+</body>
+</html>
+

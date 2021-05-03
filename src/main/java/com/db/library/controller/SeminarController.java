@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.db.library.model.Seminar;
+import com.db.library.model.SeminarSponsor;
+import com.db.library.model.SeminarSponsorId;
+import com.db.library.model.Sponsor;
 import com.db.library.repository.SeminarRepository;
+import com.db.library.repository.SeminarSponsorRepository;
+import com.db.library.repository.SponsorRepository;
 
 @Controller
 public class SeminarController {
@@ -17,19 +22,35 @@ public class SeminarController {
 	@Autowired
 	private SeminarRepository seminarRepository;
 	
+	@Autowired SponsorRepository sponsorRepository;
+	
+	@Autowired
+	SeminarSponsorRepository seminarSponsorRepository;
+	
+	
 	
 	@RequestMapping(value="/seminars",method=RequestMethod.GET)
-	public String SeminarList(Model model) {
-		model.addAttribute("seminars", seminarRepository.findAll());
+	public String seminarList(Model model) {
+		model.addAttribute("listOfSeminars", seminarRepository.findAll());
+		model.addAttribute("listOfSponsors", sponsorRepository.findAll());
 		return "seminars";
 	}
 	
 	
-	@RequestMapping(value="/seminars",method=RequestMethod.POST)
-	public String SeminarList(@RequestParam int eventId, Model model) {
-		Seminar s1 = new Seminar(eventId);
-		seminarRepository.save(s1);
-		model.addAttribute("seminars", seminarRepository.findAll());
+	@RequestMapping(value="/seminars/addSponsor",method=RequestMethod.POST)
+	public String seminarSponsorAdd(@RequestParam Integer eventId, @RequestParam Integer sponsorId, @RequestParam Long amount,Model model) {
+		
+		SeminarSponsorId ssId = new SeminarSponsorId(eventId, sponsorId);
+		SeminarSponsor seminarSponsor = new SeminarSponsor(ssId,seminarRepository.getOne(eventId),sponsorRepository.getOne(sponsorId),amount);
+		seminarSponsorRepository.save(seminarSponsor);
+		return "redirect:/seminars/";
+	}
+	
+	@RequestMapping(value="/seminars/removesponsor",method=RequestMethod.GET)
+	public String seminarSponsorAdd(@RequestParam Integer eventId, @RequestParam Integer sponsorId,Model model) {
+		
+		SeminarSponsorId ssId = new SeminarSponsorId(eventId, sponsorId);		
+		seminarSponsorRepository.deleteById(ssId);
 		return "redirect:/seminars/";
 	}
 }
