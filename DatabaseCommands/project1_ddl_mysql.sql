@@ -1,3 +1,5 @@
+drop schema if exists library;
+create schema library;
 use library;
 
 CREATE TABLE sm_authors (
@@ -39,10 +41,15 @@ CREATE TABLE sm_customers (
     cus_id         BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'This is customer id',
     id_type        VARCHAR(30) NOT NULL COMMENT 'This is customer id type',
     id_number      VARCHAR(30) NOT NULL COMMENT 'Identification number of a given ID type',
-    full_name      VARCHAR(30) NOT NULL COMMENT 'This customer full name.',
+    f_name      VARCHAR(30) NOT NULL COMMENT 'This is customer first name.',
+    l_name      VARCHAR(30) NOT NULL COMMENT 'This is customer last name.',
     phone_number   BIGINT NOT NULL COMMENT 'This is customer phone number.',
     email_address  VARCHAR(100) NOT NULL COMMENT 'This is customer email address.'
 );
+
+
+ALTER TABLE sm_customers
+ADD UNIQUE email_address_UNIQUE (email_address);
 
 
 
@@ -51,7 +58,7 @@ CREATE TABLE sm_events (
     event_name            VARCHAR(50) NOT NULL COMMENT 'This is event name.',
     event_start_datetime  DATETIME NOT NULL COMMENT 'This is event start date with time.',
     event_stop_datetime   DATETIME NOT NULL COMMENT 'This is event stop date with time.',
-    sm_topics_topic_id    TINYINT NOT NULL COMMENT 'This is unique topic id.',
+    topic_id    TINYINT NOT NULL COMMENT 'This is unique topic id.',
     event_type            CHAR(1) NOT NULL COMMENT 'This is event type.'
 );
 ALTER TABLE sm_events
@@ -110,7 +117,7 @@ CREATE TABLE sm_payment (
     payment_id        INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'This is the invoice payment id for the given book rental by a customer.',
     invoice_id        INT NOT NULL COMMENT 'This is the invoice id for the given book rental by a customer.',
     payment_date      DATETIME NOT NULL COMMENT 'This is the invoice payment date for the given book rental by a customer.',
-    card_holder_name  VARCHAR(16) NOT NULL COMMENT 'This is the invoice payment''s cardholder name for the given book rental by a customer.',
+    card_holder_name  VARCHAR(16) NULL COMMENT 'This is the invoice payment''s cardholder name for the given book rental by a customer.',
     payment_amount    DECIMAL(7, 2) NOT NULL COMMENT 'This is the invoice payment amount for the given book rental by a customer.',
     payment_method    VARCHAR(50) NOT NULL COMMENT 'This is the invoice payment method for the given book rental by a customer.'
 );
@@ -201,7 +208,7 @@ ALTER TABLE sm_book
         
 
 ALTER TABLE sm_events
-    ADD CONSTRAINT sm_events_sm_topics_fk FOREIGN KEY ( sm_topics_topic_id )
+    ADD CONSTRAINT sm_events_sm_topics_fk FOREIGN KEY ( topic_id )
         REFERENCES sm_topics ( topic_id );
 
 ALTER TABLE sm_exhibition
@@ -484,8 +491,8 @@ CREATE TRIGGER tu_SM_invoice
  ON SM_Rental FOR EACH ROW
 BEGIN
 
-DECLARE  invoice_amount float;
-if (new.actual_return_date IS NOT NULL 
+  DECLARE invoice_amount double;
+ if (new.actual_return_date IS NOT NULL 
 	AND new.actual_return_date<>old.actual_return_date) then
 	 IF (new.actual_return_date<=new.expected_return_date) THEN
 		set invoice_amount = ( DATEDIFF(new.actual_return_date,new.BORROW_DATE)*0.2);
@@ -501,25 +508,22 @@ END$$
 DELIMITER ;
 
 
-ALTER TABLE sm_events
-    drop column topic_id;
-
-ALTER TABLE sm_events
-    add column topic_id TINYINT;
-
-
-update sm_events set topic_id = sm_topics_topic_id  where event_id>0;
 
 ALTER TABLE sm_events
     drop foreign key sm_events_sm_topics_fk;
     
-
 ALTER TABLE sm_events
-    ADD CONSTRAINT sm_events_sm_topics_1_fk FOREIGN KEY (topic_id )
-        REFERENCES sm_topics ( topic_id );
-        
-ALTER TABLE sm_events
-    drop column  sm_topics_topic_id;
+    drop topic_id;
     
 ALTER TABLE sm_events
-    modify column topic_id TINYINT not null;
+    add column topic_id TINYINT not null;
+    
+ALTER TABLE sm_events
+    ADD CONSTRAINT sm_events_sm_topics_fk FOREIGN KEY (topic_id )
+        REFERENCES sm_topics ( topic_id );
+
+update sm_events set topic_id = topic_id  where event_id>0;
+
+
+
+
