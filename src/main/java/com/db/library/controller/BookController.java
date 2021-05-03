@@ -230,63 +230,11 @@ public class BookController {
 	
 	
 	
-	    @RequestMapping(value="/list/authors",method=RequestMethod.GET)
-	    public List<AutoCompleteItem> authorItems(@RequestParam(value = "q", required = false) String query) {
-		    List<Author> authors=authorRepository.findAll();
-	        if (StringUtils.hasText(query)) {
-	        	return authors
-	        	  .stream()
-	        	  .map(this::mapToAutoCompleteItem)
-	        	  .collect(Collectors.toList());
-	        }
+	   
 
-	        return authors
-		        	  .stream().filter(author -> (author.getFirstName()+" "+author.getFirstName())
-                              .toLowerCase()
-                              .contains(query))
-		        	  .map(this::mapToAutoCompleteItem)
-		        	  .collect(Collectors.toList());
-	        	
-	    }
+	   
 
-	    
-	    @RequestMapping(value="/list/topics",method=RequestMethod.GET)
-	    public List<AutoCompleteItem> topicItems(@RequestParam(value = "q", required = false) String query) {
-		    List<Topic> topics=topicRepository.findAll();
-	        if (StringUtils.hasText(query)) {
-	        	return topics
-	        	  .stream()
-	        	  .map(this::mapToAutoCompleteItem)
-	        	  .collect(Collectors.toList());
-	        }
-
-	        return topics
-		        	  .stream().filter(topic ->topic.getTopicName()
-                              .toLowerCase()
-                              .contains(query))
-		        	  .map(this::mapToAutoCompleteItem)
-		        	  .collect(Collectors.toList());
-	        	
-	    }
-
-	    private AutoCompleteItem mapToAutoCompleteItem(Object obj) {
-	    	AutoCompleteItem a=new AutoCompleteItem();
-	    	if(obj instanceof Author)
-	    	{ Author author=(Author)obj;
-	    	a.id=author.getAuthorId();
-	    	a.text=author.getFirstName()+" "+author.getLastName();
-	    	}
-	    	else {
-	    		if(obj instanceof Topic)
-		    	{ Topic topic=(Topic)obj;
-		    	a.id=topic.getTopicId();
-		    	a.text=topic.getTopicName();
-		      
-		    	}
-	    		
-	    	}
-	    	  return a;
-	    }
+	 
 	
 	
 

@@ -135,23 +135,23 @@ SELECT * FROM SM_Rental;
 
 -- ---------------------------------------------------------------------------------------------
 -- SM_Events entity
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (1, 'Climate Change', STR_TO_DATE('2021-04-08 11:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-08 14:00:00', '%Y-%m-%d %H:%i:%s'), 3, 'S');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (2, 'Childhood Obesity', STR_TO_DATE('2021-04-08 15:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-08 18:00:00', '%Y-%m-%d %H:%i:%s'), 2, 'S');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (3, 'Black History Month', STR_TO_DATE('2021-03-12 11:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-03-12 14:00:00', '%Y-%m-%d %H:%i:%s'), 1, 'S');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (4, 'Travel and Living', STR_TO_DATE('2021-04-07 11:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-07 14:00:00', '%Y-%m-%d %H:%i:%s'), 5, 'S');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (5, 'Art & Design', STR_TO_DATE('2021-04-06 10:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-06 12:00:00', '%Y-%m-%d %H:%i:%s'), 4, 'E');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (6, 'Art & Design-I', STR_TO_DATE('2021-04-06 10:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-06 12:00:00', '%Y-%m-%d %H:%i:%s'), 4, 'E');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (7, 'Art & Design-II', STR_TO_DATE('2021-04-06 10:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-06 12:00:00', '%Y-%m-%d %H:%i:%s'), 4, 'E');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (8, 'Art & Design-III', STR_TO_DATE('2021-04-06 10:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-06 12:00:00', '%Y-%m-%d %H:%i:%s'), 4, 'E');
-INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, SM_Topics_topic_id, event_type ) 
+INSERT INTO SM_Events(event_id, event_Name, event_start_datetime, event_stop_datetime, topic_id, event_type ) 
 VALUES (9, 'Art & Design-IV', STR_TO_DATE('2021-04-06 10:00:00', '%Y-%m-%d %H:%i:%s'), STR_TO_DATE('2021-04-06 12:00:00', '%Y-%m-%d %H:%i:%s'), 4, 'E');
 
 SELECT * FROM SM_Events;
