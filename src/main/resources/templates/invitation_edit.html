@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+		
+	<div class="container">
+		<form th:action="@{/invitations/update}" method="post" enctype="multipart/form-data">
+		   
+    	   <div class="row">
+				<div class="col-md-6">
+				  <input class="form-control" id="id"  name="id"  th:value="${invitation.invitationId}" hidden>
+				</div>
+		   </div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="authorId" class="form-label">Select Author</label>
+				  <select class="form-select" name="authorId">
+					  <option th:each="author : ${listOfAuthors}" th:value="${author.authorId}" th:text="${author.authorId}+' - '+ ${author.firstName}+ ' '+${author.lastName}"
+					  		th:selected="${invitation.author.authorId==author.authorId}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventId" class="form-label">Select Seminar</label>
+				  <select class="form-select" name="eventId"> 
+					  <option th:each="seminar : ${listOfSeminars}" th:value="${seminar.eventId}" th:text="${seminar.event.eventId} +' - '+${seminar.event.eventName}"
+					  			th:selected="${invitation.seminar.eventId==seminar.eventId}" ></option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Save Changes" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+</body>
+</html>
+

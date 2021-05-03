@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="sm_topics")
 public class Topic {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer topicId;
 	private String topicName;
 	

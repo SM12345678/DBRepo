@@ -4,36 +4,71 @@
 	
 </head>
 <body>
-	<h1>invitations</h1>
-	<table>
-		<tr>
-			<th>Invitation Id</th>
-			<th>Author Id</th>
-			<th>Event Id</th>
-		</tr>
-		<tr th:each="invitation : ${invitations}">
-			<td th:text="${invitation.invitationId}"></td>
-			<td th:text="${invitation.authorId}"></td>
-			<td th:text="${invitation.eventId}"></td>
-		<!--	<td>
-				<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
-			</td> -->
-		</tr>
-	</table>
+<nav th:insert="index :: nav-header"> </nav>
+
+	<div class="container">
+		<h3>Invitations</h3>
+		<table class="table">
+			<tr>
+				<th>Invitation Id</th>
+				<th>Author Name</th>
+				<th>Event Name</th>
+			</tr>
+			<tr th:each="invitation : ${listOfInvitations}">
+				<td th:text="${invitation.invitationId}"></td>
+				<td>
+					<span th:text="${invitation.author.firstName}+ ' '+${invitation.author.lastName}"> fullName </span>
+				</td>
+				<td>
+					<a  th:href="'/events/edit?eventId=' + ${invitation.seminar.event.eventId}"><span th:text="${invitation.seminar.event.eventName}"> eventName </span></a>
+				</td>
+				<td>
+				  <a class="btn btn-primary" type="button" th:href="'/invitations/edit?id=' + ${invitation.invitationId}" name="button">
+					Edit
+				  </a>
+				</td>
+				<td>
+					<a class="btn btn-danger" type="button" th:href="'/invitations/delete?id=' + ${invitation.invitationId}" name="button">
+					Delete
+					</a>
+				</td>
+			<!--	<td>
+					<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
+				</td> -->
+			</tr>
+		</table>
+	</div>
 	<hr/>
 	
-	<form th:action="@{/invitations}" method="post" enctype="multipart/form-data">
-		<div>
-			Author Id: <input name="authorId" />
-		</div>
-		<div>
-			Event Id: <input name="eventId" />
-		</div>
-		<div>
-			<input type="submit" value="Create Invitation" name="button"/>
-		</div>
-	</form>
+	<div class="container">
+		<form th:action="@{/invitations}" method="post" enctype="multipart/form-data">
+		    
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="authorId" class="form-label">Select Customer</label>
+				  <select class="form-select" name="authorId">
+					  <option th:each="author : ${listOfAuthors}" th:value="${author.authorId}" th:text="${author.authorId}+' - '+ ${author.firstName}+ ' '+${author.lastName}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventId" class="form-label">Select Exhibition</label>
+				  <select class="form-select" name="eventId"> 
+					  <option th:each="seminar : ${listOfSeminars}" th:value="${seminar.eventId}" th:text="${seminar.event.eventId} +' - '+${seminar.event.eventName}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Register" name="button"/>
+			</div>
+		</form>
+	</div>
 	<span th:insert="index::footer">
-	</span>
+	</span>	
+	
 </body>
 </html>
+

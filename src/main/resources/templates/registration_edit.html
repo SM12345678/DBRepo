@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+		
+	<div class="container">
+		<form th:action="@{/registrations/update}" method="post" enctype="multipart/form-data">
+		   
+    	   <div class="row">
+				<div class="col-md-6">
+				  <input class="form-control" id="id"  name="id"  th:value="${registration.registrationId}" hidden>
+				</div>
+		   </div>	
+		   <div class="row">
+				<div class="col-md-6">
+				  <label for="eventType" class="form-label">Select Customer</label>
+				  <select class="form-select" name="cusId">
+					  <option th:each="customer : ${listOfCustomers}" th:value="${customer.id}" th:text="${customer.fullName} +' '+${customer.idNumber}+' '+${customer.idType}"
+					  			th:selected="${registration.customer.id==customer.id}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="eventType" class="form-label">Select Exhibition</label>
+				  <select class="form-select" name="eventId">
+					  <option th:each="exhibition : ${listOfExhibitions}" th:value="${exhibition.eventId}" th:text="${exhibition.event.eventId} +'-'+${exhibition.event.eventName}" 
+					  		th:selected="${registration.exhibition.event.eventId==exhibition.event.eventId}"></option>
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Save Changes" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+</body>
+</html>
+
