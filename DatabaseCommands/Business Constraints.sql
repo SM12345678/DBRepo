@@ -20,13 +20,13 @@ check ( (LOWER(payment_method) in ('cash', 'credit', 'debit', 'paypal') and card
 
 ALTER TABLE sm_reservations ADD CONSTRAINT C_sm_reservations_time_from_time_to CHECK(time_from <= time_to); 
 
-ALTER TABLE sm_reservations ADD CONSTRAINT C_sm_reservations_time_in_range CHECK(((DATE_FORMAT(time_from, '%H%i') between '07:59:00' and '10:01:00') and (DATE_FORMAT(time_to, '%H%i') between '07:59:00' and '10:01:00')) or 
+ALTER TABLE sm_reservations ADD CONSTRAINT C_sm_reservations_time_in_range CHECK(
+((DATE_FORMAT(time_from, "%H%i") between TIME_FORMAT('7:59:00','%H%i') and TIME_FORMAT('10:01:00','%H%i')) and (DATE_FORMAT(time_to, '%H%i') between TIME_FORMAT('7:59:00','%H%i') and TIME_FORMAT('10:01:00','%H%i'))) or 
 
-((DATE_FORMAT(time_from, '%H%i') between '10:59:00' and '13:01:00') and (DATE_FORMAT(time_to, '%H%i') between '10:59:00' and '13:01:00')) or 
+((DATE_FORMAT(time_from, "%H%i") between TIME_FORMAT('10:59:00','%H%i') and TIME_FORMAT('13:01:00','%H%i')) and (DATE_FORMAT(time_to, '%H%i') between TIME_FORMAT('10:59:00','%H%i') and TIME_FORMAT('13:01:00','%H%i'))) or 
 
-((DATE_FORMAT(time_from, '%H%i') between '12:59:00' and '15:01:00') and (DATE_FORMAT(time_to, '%H%i') between '12:59:00' and '15:01:00')) or 
+((DATE_FORMAT(time_from, "%H%i") between TIME_FORMAT('12:59:00','%H%i') and TIME_FORMAT('15:01:00','%H%i')) and (DATE_FORMAT(time_to, '%H%i') between TIME_FORMAT('12:59:00','%H%i') and TIME_FORMAT('15:01:00','%H%i'))) or 
 
-((DATE_FORMAT(time_from, '%H%i') between '15:59:00' and '18:01:00') and (DATE_FORMAT(time_to, '%H%i') between '15:59:00' and '18:01:00'))); 
-
- 
+((DATE_FORMAT(time_from, "%H%i") between TIME_FORMAT('15:59:00','%H%i') and TIME_FORMAT('18:01:00','%H%i')) and (DATE_FORMAT(time_to, '%H%i') between TIME_FORMAT('15:59:00','%H%i') and TIME_FORMAT('18:01:00','%H%i')))
+); 
 
