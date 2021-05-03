@@ -88,28 +88,30 @@ public class Book implements Serializable {
 		 this.authors=authors;
 		}
 	 
-	 public void setBooks(Set<Author> authors) {
-			this.authors = authors;
-		}
-	
     @Transient 
 	public String authorsString;
 	
 	public String getAuthorsString() {
 		String s="";
+		if(authors.size()>0)
+		{
 		for(Author a:authors)
 		{
 			s+=","+ a.getFirstName()+" "+a.getLastName();
 		}
-        return s.substring(1);
+        return s.substring(1);}
+		return s;
     }	
 	public void setAuthorsString() {
 		String s="";
+		if(authors.size()>0)
+		{
 		for(Author a:authors)
 		{
 			s+=","+ a.getFirstName()+" "+a.getLastName();
 		}
 		this.authorsString= s.substring(1);
+		}
     }	
 	
 	@Column(name="topic_id")
@@ -131,5 +133,12 @@ public class Book implements Serializable {
 	public void setAuthorids(List<Integer> authorids) {
         this.authorids=authorids;
     }
+	
+	@Column(name="deleted")
+	public int deleted;
+	public void setDeleted(int i) {
+		// TODO Auto-generated method stub
+		deleted=1;
+	}
 
 }

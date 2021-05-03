@@ -41,6 +41,7 @@
 			<td th:text="${book.topic.topicName}"></td>
 			 <td th:text="${book.authorsString}"></td>
 			  <td><a th:href=@{/books/edit(id=${book.id})}>Edit Book</a>
+			   <td><a th:href=@{/books/delete(id=${book.id})}>Delete Book</a>
 		</tr>
 	</table>
 	<hr />

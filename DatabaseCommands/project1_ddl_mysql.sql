@@ -18,7 +18,8 @@ CREATE TABLE sm_authors (
 CREATE TABLE sm_book (
     topic_id   TINYINT NOT NULL COMMENT 'This is topic id for the given book.',
     book_id    INT NOT NULL  PRIMARY KEY AUTO_INCREMENT COMMENT 'This is unique book id for the given book.',
-    book_name  VARCHAR(50) NOT NULL COMMENT 'This is book name for the given book.'
+    book_name  VARCHAR(50) NOT NULL COMMENT 'This is book name for the given book.',
+    deleted    TINYINT(1) DEFAULT '0',
 );
 
 
