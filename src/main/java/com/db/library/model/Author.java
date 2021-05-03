@@ -127,7 +127,8 @@ public class Author {
 	 public String fullName;
 	 public void setfullName() {
 			this.fullName = this.firstName +" "+this.lastName;
-		}	
+	}
+	
 }
 
 

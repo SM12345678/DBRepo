@@ -1,9 +1,12 @@
 package com.db.library.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,46 +14,59 @@ import javax.persistence.Table;
 public class Invitation {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private int invitationId;
-	private int authorId;
-	private int eventId;
+	private Integer invitationId;
+	
+	@ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name="event_id", nullable=true)
+	private Seminar seminar;
+	
+	@ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name="author_id", nullable=false)
+	private Author author;
 	
 	public Invitation() {
 		
 	}
 	
-	public Invitation(int authorId, int eventId) {
-		this.authorId = authorId;
-		this.eventId = eventId;
-	}
 	
-	public Invitation(int invitationId, int authorId, int eventId) {
+	
+
+	public Invitation(Integer invitationId, Seminar seminar, Author author) {
+		super();
 		this.invitationId = invitationId;
-		this.authorId = authorId;
-		this.eventId = eventId;
+		this.seminar = seminar;
+		this.author = author;
 	}
 
-	public int getAuthorId() {
-		return authorId;
+
+
+
+	public Seminar getSeminar() {
+		return seminar;
 	}
 
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+
+
+	public void setSeminar(Seminar seminar) {
+		this.seminar = seminar;
 	}
 
-	public int getEventId() {
-		return eventId;
+
+
+	public Author getAuthor() {
+		return author;
 	}
 
-	public void setEventId(int eventId) {
-		this.eventId = eventId;
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
 
-	public int getInvitationId() {
+
+	public Integer getInvitationId() {
 		return invitationId;
 	}
 
-	public void setInvitationId(int invitationId) {
+	public void setInvitationId(Integer invitationId) {
 		this.invitationId = invitationId;
 	}
 
