@@ -49,7 +49,7 @@ public class AuthorController {
 		tx.commit();
 		session.close();
 		model.addAttribute("authors", authorRepository.findAll());
-		return "redirect:/authors/";
+		return "redirect:/a/authors/";
 		
 	}
 	

@@ -69,7 +69,7 @@ public class RentalController {
 	@Autowired
 	private RentalRepository rentalRepository;
 
-	@RequestMapping(value = "/rentals", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/rentals", method = RequestMethod.GET)
 	public String booksListwithStatus(Model model) {
 
 		Session session = sessionFactory.openSession();

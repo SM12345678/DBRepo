@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 
 
 @Entity
-@Table(name = "sm_rental")
+@Table(name = "SM_Rental")
 public class Rental {
 	
 	public Rental() {
