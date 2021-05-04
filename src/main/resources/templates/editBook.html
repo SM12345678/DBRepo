@@ -30,7 +30,7 @@
 			 <option value="">nothing selected</option>
             <option th:each="p : ${authors}" th:value="${p.authorId}" th:text="${p.fullName}" th:selected="${book.authorids.contains(p.authorId)}" />
             </select>
-        <a th:href="@{/a/authors/add}">Go to add author to include new author in the list</a></Div> 
+        <a th:href="@{/a/authors}">Go to add author to include new author in the list</a></Div> 
 		
 		
 		 <input th:field="*{id}" style="display:none"/>
