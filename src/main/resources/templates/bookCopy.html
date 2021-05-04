@@ -1,51 +1,37 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>RTL Library</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<style type="text/css">
-    label {
-        display: inline-block;
-        width: 200px;
-        margin: 5px;
-        text-align: left;
-    }
-    input[type=text], input[type=password], select {
-        display: inline-block;
-        width: 200px;
-    }
-    input[type=radio] {
-        margin-left: 45px;
-    }
-    input[type=checkbox] {
-        margin-right: 190px;
-    }  
-    button {
-        padding: 5px;
-        margin: 10px;
-    }
-</style>
+
+<head th:insert="index :: header">
+
 </head>
+
 <body>
-	<h1>Book Name :  <label th:text="${book.bookName}"> </label></h1>
-	<table>
-		<tr>
-			<th>Copy Id</th>
-			<th>Status</th>
+	<nav th:insert="index :: nav-header"> </nav>
+	<div class="container">
+		<h1>Book Name : <label th:text="${book.bookName}"> </label></h1>
+		<table class="table">
+			<tr>
+				<th>Copy Id</th>
+				<th>Status</th>
 
 
-		</tr>
-		<tr th:each="copy : ${bookCopyList}">
-			<td th:text="${copy.copyid}"></td>
-			<td th:text="${copy.status}"></td>
-			<td><a th:href=@{/books/copy/delete(id=${copy.copyid})}>Delete Copy</a>	</td>		
-		</tr>
-	</table>
-	<hr />
+			</tr>
+			<tr th:each="copy : ${bookCopyList}">
+				<td th:text="${copy.copyid}"></td>
+				<td th:text="${copy.status}"></td>
+				<td><a th:href=@{/books/copy/delete(id=${copy.copyid})}>Delete Copy</a> </td>
+			</tr>
+		</table>
+		<hr />
 
-<Div>
-<a th:href="@{/books/copy/add(id=${book.id})}">Add New Copy</a></Div> 
+		<Div>
+			<a th:href="@{/books/copy/add(id=${book.id})}">Add New Copy</a></Div>
 
-	<Div><a th:href="@{/books}">Go to book list</a></Div>
+		<Div><a th:href="@{/books}">Go to book list</a></Div>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+
 </body>
+
 </html>

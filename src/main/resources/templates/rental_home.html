@@ -1,53 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>RTL Library</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<style type="text/css">
-    label {
-        display: inline-block;
-        width: 200px;
-        margin: 5px;
-        text-align: left;
-    }
-    input[type=text], input[type=password], select {
-        display: inline-block;
-        width: 200px;
-    }
-    input[type=radio] {
-        margin-left: 45px;
-    }
-    input[type=checkbox] {
-        margin-right: 190px;
-    }  
-    button {
-        padding: 5px;
-        margin: 10px;
-    }
-</style>
+
+<head th:insert="index :: header">
+	<title>RTL Library</title>
 </head>
+
 <body>
-	<h1>Rent a Book</h1>
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>Topic</th>
-			<th>Author(s)</th>
-			<th>Status</th>
+	<nav th:insert="index :: nav-header"> </nav>
+	<div class="container">
+		<h1>Rent a Book</h1>
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Topic</th>
+				<th>Author(s)</th>
+				<th>Status</th>
 
 
-		</tr>
-		<tr th:each="book : ${books}">
-			<td th:text="${book.bookName}"></td>
-			<td th:text="${book.topic.topicName}"></td>
-			 <td th:text="${book.authorsString}"></td>
-			  <td th:text="${book.BookStatus}"></td>
-			  
-			   <td th:if="${book.makerentable}"> <a th:href=@{/rentals/rent(id=${book.availableCopyId})} >Rent Book</a></td>
-		
-		</tr>
-	</table>
-	<hr />
-<Div><a th:href="@{/rental/cust/history}">Go to Rental History</a></Div> 
+			</tr>
+			<tr th:each="book : ${books}">
+				<td th:text="${book.bookName}"></td>
+				<td th:text="${book.topic.topicName}"></td>
+				<td th:text="${book.authorsString}"></td>
+				<td th:text="${book.BookStatus}"></td>
+
+				<td th:if="${book.makerentable}"> <a class="btn btn-primary" th:href=@{/rentals/rent(id=${book.availableCopyId})}>Rent</a>
+				</td>
+
+			</tr>
+		</table>
+		<hr />
+		<Div><a th:href="@{/rental/cust/history}">Go to Rental History</a></Div>
+	</div>
+	<span th:insert="index::footer">
+	</span>
 </body>
+
 </html>

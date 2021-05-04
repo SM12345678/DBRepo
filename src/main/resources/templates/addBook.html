@@ -1,148 +1,73 @@
-
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>RTL Library</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<style type="text/css">
-    label {
-        display: inline-block;
-        width: 200px;
-        margin: 5px;
-        text-align: left;
-    }
-    input[type=text], input[type=password], select {
-        display: inline-block;
-        width: 200px;
-    }
-    input[type=radio] {
-        margin-left: 45px;
-    }
-    input[type=checkbox] {
-        margin-right: 190px;
-    }  
-    button {
-        padding: 5px;
-        margin: 10px;
-    }
- <link href="/core/css/bootstrap.min.css" rel="stylesheet">
-</style>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-	
-	
-	
+<head th:insert="index :: header">
 
 </head>
+
 <body>
-	<h1>Add Book</h1>
-	<hr />
-	
-<form  th:action="@{/books/add}" method="post" th:object="${book}" class="form-group" id="#form">	
-<!--  <form   method="post" th:object="${book}" class="form-group" id="#form"> -->
-	 <div>
-			Book Name: <input id="name" name="bookName" /> 
+	<nav th:insert="index :: nav-header"> </nav>
+	<div class="container">
+		<h1>Add Book</h1>
+		<hr />
+
+		<form th:action="@{/books/add}" method="post" th:object="${book}" class="form-group" id="#form">
+			<div>
+				Book Name: <input id="name" name="bookName" />
 			</div>
 			</br>
-			 <div>
-			  <!-- <th:select path="topicId" items="${topics}" /> -->
-			Book Topic: <select id="topicId" th:field="*{topicid}">
-			 <option th:value="0">nothing selected</option>
-            <option th:each="p : ${topics}" th:value="${p.topicId}"  th:text="${p.topicName}" />
-           </select>
-         <a th:href="@{/books/add}">Go to add topic to include new topic in the list</a>
-         </Div> 
-			
 			<div>
-			</br>
-			Book Author: 
-			<select id="authorids" th:field="*{authorids}" multiple="true">
-			 <option value="">nothing selected</option>
-            <option th:each="p : ${authors}" th:value="${p.authorId}" th:text="${p.fullName}" />
-            </select>
-        <a th:href="@{/books/add}">Go to add author to include new author in the list</a></Div> 
-		
-		<div>
-		
-			<input type="submit" id="submit" value="Add Book"/>
-		</div>
-		
-		<div id="bookdetailsDiv" style="display:none" >
-	
-	<h3>Book Added:</h3>
+				<!-- <th:select path="topicId" items="${topics}" /> -->
+				Book Topic: <select id="topicId" th:field="*{topicid}">
+					<option th:value="0">nothing selected</option>
+					<option th:each="p : ${topics}" th:value="${p.topicId}" th:text="${p.topicName}" />
+				</select>
+				<a th:href="@{/books/add}">Go to add topic to include new topic in the list</a>
+			</Div>
 
-		
-		
-		<table>
-		<tr>
-			<th>Name</th>
-			<th>Topic</th>
-			<th>Author(s)</th>
+			<div>
+				</br>
+				Book Author:
+				<select id="authorids" th:field="*{authorids}" multiple="true">
+					<option value="">nothing selected</option>
+					<option th:each="p : ${authors}" th:value="${p.authorId}" th:text="${p.fullName}" />
+				</select>
+				<a th:href="@{/books/add}">Go to add author to include new author in the list</a></Div>
 
+			<div>
 
-		</tr>
-		<tr>
-			<td id="bookName" ></td>
-			<td id="bookTopic" ></td>
-			 <td id="bookAuthors"></td>
-		</tr>
-	</table>
-			
-		</div>
-		
-	</form>
+				<input type="submit" id="submit" value="Add Book" />
+			</div>
 
-<!-- <script type="text/javascript"> 
-	jQuery(document).ready(function() {
-	 debugger
-	 jQuery("#submit").click(function(){
-		 
-		 debugger
-		 var bookdata = {};
-		 bookdata["name"] = $("#name").val();
-		// book["topicid"] = $("#topicid").val();
-		 jQuery("#topicid :selected").each(function() {
-			 bookdata["topicid"].append(this.value);
-	        });
-		 jQuery("#authorids :selected").each(function() {
-			 bookdata["authorids"].append(this.value);
-	        });
-		var booksdataJson= JSON.stringify(bookdata);
-		// book["authorids"] = $("#lastName").val();
-		 debugger
-		 
-	      $.ajax({
-	       async: true,
-	       type : "POST",
-	       contentType : "application/json",
-	       url : "/books/save",
-	       data : booksdataJson,
-	       dataType : 'json',
-	       cache : false,
-	       timeout : 600000,
-	       success : function(data) {
-	    	   $('#bookdetailsDiv').show();
-	    	  debugger
-	    	  alert("success");
-	    	  jQuery('#bookName').text(data.bookName);
-	    	  jQuery('#bookTopic').text(data.topic.topicName);
-	    	  jQuery('#bookAuthors').text(data.authorsString);
-	       },
-	       error : function(e) {
-	    	   debugger
-	        alert(e+"faild");
-	       }
-	      });
-	      
-	  });
-	    });
-	
-		
-	</script>-->
+			<div id="bookdetailsDiv" style="display:none">
+
+				<h3>Book Added:</h3>
 
 
-	
 
+				<table>
+					<tr>
+						<th>Name</th>
+						<th>Topic</th>
+						<th>Author(s)</th>
+
+
+					</tr>
+					<tr>
+						<td id="bookName"></td>
+						<td id="bookTopic"></td>
+						<td id="bookAuthors"></td>
+					</tr>
+				</table>
+
+			</div>
+
+		</form>
+
+	</div>
+	<span th:insert="index::footer">
+	</span>
 
 </body>
+
 </html>
