@@ -26,7 +26,24 @@ public class Customer {
 	
 	private String idNumber;
 	
-	private String fullName;
+	private String fName;
+	
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
+	}
+	private String lName;
 	
 	private long phoneNumber;
 	
@@ -53,26 +70,28 @@ public class Customer {
 	@Column(name = "is_admin", nullable = true)
 	 private Boolean isAdmin;
 	
-	public Customer(Integer id, String idType, String idNumber, String fullName, long phoneNumber, String emailAddress,
+	public Customer(Integer id, String idType, String idNumber, String fName,String lName, long phoneNumber, String emailAddress,
 			String password, Boolean isAdmin) {
 		super();
 		this.id = id;
 		this.idType = idType;
 		this.idNumber = idNumber;
-		this.fullName = fullName;
+		this.fName = fName;
+		this.lName = lName;
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.password = password;
 		this.isAdmin = isAdmin;
 	}
 
-	public Customer(Integer id, String idType, String idNumber, String fullName, long phoneNumber,
+	public Customer(Integer id, String idType, String idNumber, String fname,String lname, long phoneNumber,
 			String emailAddress) {
 		super();
 		this.id = id;
 		this.idType = idType;
 		this.idNumber = idNumber;
-		this.fullName = fullName;
+		this.fName = fname;
+		this.lName = lname;
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 	}
@@ -102,11 +121,7 @@ public class Customer {
 	}
 
 	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+		return fName+ " "+lName;
 	}
 
 	public long getPhoneNumber() {
