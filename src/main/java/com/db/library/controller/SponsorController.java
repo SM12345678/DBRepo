@@ -39,30 +39,34 @@ public class SponsorController {
 		return "sponsors";
 	}
 	
-//	@RequestMapping(value="/events/edit",method=RequestMethod.GET)
-//	public String eventEdit(@RequestParam int eventId,Model model) {
-//		
-//		List<Topic> listOfTopics = topicRepository.findAll();
-//		model.addAttribute("event", eventService.getEvent(eventId));
-//		model.addAttribute("listOfTopics", listOfTopics);
-//		return "event_edit";
-//	}
-//	
-//	@RequestMapping(value="/events/delete",method=RequestMethod.GET)
-//	public String deleteEvent(@RequestParam int eventId,Model model) {
-//		eventService.deleteEvent(eventId);
-//		List<Event> listOfEvents = eventService.getAllEvents();
-//		List<Topic> listOfTopics = topicRepository.findAll();
-//		model.addAttribute("listOfEvents", listOfEvents);
-//		model.addAttribute("listOfTopics", listOfTopics);
-//		return "redirect:/events/";
-//	}
+	@RequestMapping(value="/sponsors/edit",method=RequestMethod.GET)
+	public String sponsorEdit(@RequestParam Integer sponsorId,Model model) {		
+		
+		model.addAttribute("sponsor", sponsorRepository.getOne(sponsorId));
+		return "sponsor_edit";
+	}
+	
+	@RequestMapping(value="/sponsors/delete",method=RequestMethod.GET)
+	public String deleteSponsor(@RequestParam  Integer sponsorId,Model model) {
+		Sponsor sponsor = sponsorRepository.getOne(sponsorId);
+		if(sponsor.getIndividual()!=null) {
+			individualRepository.deleteById(sponsorId);
+		}
+		if(sponsor.getOrganization()!=null) {
+			orgRepository.deleteById(sponsorId);
+		}
+		//sponsorRepository.deleteById(sponsorId);
+		return "redirect:/sponsors/";
+	}
 //	
 //	
 	@RequestMapping(value="/sponsors",method=RequestMethod.POST)
-	public String sponsorAdd(@RequestParam String firstName,@RequestParam String lastName,@RequestParam String orgName,@RequestParam String sponsorType,Model model) {
+	public String sponsorAdd(@RequestParam(required = false) Integer sponsorId, @RequestParam(required = false) String firstName,
+			@RequestParam(required = false) String lastName,@RequestParam(required = false) String orgName,
+			@RequestParam(required = false) String sponsorType,Model model) {
 		Sponsor sponsor = new Sponsor();
 		sponsor.setSponsorType(sponsorType.charAt(0));
+		sponsor.setSponsorId(sponsorId);
 		sponsor = sponsorRepository.save(sponsor);
 		if(sponsor.getSponsorType()=='O') {
 			orgRepository.save(new Organization(sponsor.getSponsorId(),orgName,sponsor));
@@ -70,18 +74,6 @@ public class SponsorController {
 		} else {
 			individualRepository.save(new Individual(sponsor.getSponsorId(),firstName,lastName,sponsor));
 		}
-		//sponsorRepository.save(sponsor);
 		return "redirect:/sponsors/";
 	}
-//	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss", Locale.ENGLISH);
-//	@RequestMapping(value="/events/update",method=RequestMethod.POST)
-//	public String eventUpdate(@RequestParam Integer eventId,@RequestParam String eventName, @RequestParam String eventStartDatetime, 
-//			@RequestParam String eventStopDatetime, @RequestParam int topicId, @RequestParam char eventType,Double expenses,Model model) throws ParseException {
-//		Topic tp = topicRepository.getOne(topicId);
-//		Event e1 = new Event(eventId, eventName, formatter.parse(eventStartDatetime), formatter.parse(eventStopDatetime), tp, eventType);
-//		eventService.createEvent(e1, expenses);
-//		model.addAttribute("events", eventService.getAllEvents());
-//		model.addAttribute("listOfTopics", topicRepository.findAll());
-//		return "redirect:/events/";
-//	}
 }

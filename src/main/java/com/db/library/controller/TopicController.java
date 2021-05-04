@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.db.library.model.Sponsor;
 import com.db.library.model.Topic;
 import com.db.library.repository.TopicRepository;
 
@@ -17,17 +18,30 @@ public class TopicController {
 	
 	
 	@RequestMapping(value="/topics",method=RequestMethod.GET)
-	public String TopicList(Model model) {
-		model.addAttribute("topics", topicRepository.findAll());
+	public String topicList(Model model) {
+		model.addAttribute("allTopicsList", topicRepository.findAll());
 		return "topics";
 	}
 	
 	
-//	@RequestMapping(value="/seminars",method=RequestMethod.POST)
-//	public String TopicAdd(@RequestParam int eventId, Model model) {
-//		Seminar s1 = new Seminar(eventId);
-//		seminarRepository.save(s1);
-//		model.addAttribute("seminars", topicRepository.findAll());
-//		return "redirect:/seminars/";
-//	}
+	@RequestMapping(value="/topics",method=RequestMethod.POST)
+	public String topicAdd(@RequestParam(required = false) Integer topicId, String topicName,Model model) {
+		Topic t = new Topic(topicId, topicName);
+		topicRepository.save(t);
+		return "redirect:/topics";
+	}
+	
+	@RequestMapping(value="/topics/delete",method=RequestMethod.GET)
+	public String deleteTopic(@RequestParam  Integer topicId,Model model) {
+		topicRepository.deleteById(topicId);
+		return "redirect:/topics";
+	}
+	
+	@RequestMapping(value="/topics/edit",method=RequestMethod.GET)
+	public String sponsorEdit(@RequestParam Integer topicId,Model model) {
+		model.addAttribute("topic", topicRepository.getOne(topicId));
+		return "topic_edit";
+	}
+	
+	
 }

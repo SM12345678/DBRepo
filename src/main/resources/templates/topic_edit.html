@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+		
+	<div class="container">
+		<form th:action="@{/topics}" method="post" enctype="multipart/form-data">
+		   
+    	   <div class="row">
+				<div class="col-md-6">
+				  <input class="form-control" id="topicId"  name="topicId"  th:value="${topic.topicId}" hidden>
+				</div>
+		   </div>	
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="orgName" class="form-label">Org Name</label>
+				  <input class="form-control" id="topicName"  name="topicName" placeholder="Topic Name" th:value="${topic.topicName}">
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Save Changes" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+</body>
+</html>
+

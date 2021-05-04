@@ -28,26 +28,28 @@ public class AuthorController {
 		
 	}
 	
-//	@RequestMapping(value="/authors_d",method=RequestMethod.GET)
-//	public String authorsD(Model model) {	
-//		model.addAttribute("dummy_name", "dummy auth name");
-//		return "author_dummy";
-//		
-//	}
+
 	
 	@RequestMapping(value="/authors",method=RequestMethod.POST)
-	public String authorsAdd(@RequestParam String firstName, @RequestParam String lastName, 
+	public String authorsAdd(@RequestParam(required = false) Integer authorId,@RequestParam String firstName, @RequestParam String lastName, 
 			@RequestParam String email, @RequestParam String city, @RequestParam String state,
 			@RequestParam String zipCode, @RequestParam String stAddress,  Model model) {	
-		Author a1 = new Author(firstName, lastName, stAddress, city, state, zipCode, email);
+		Author a1 = new Author(authorId,firstName, lastName, stAddress, city, state, zipCode, email);
 		authorRepository.save(a1);
 		model.addAttribute("authors", authorRepository.findAll());
 		return "redirect:/authors/";
 		
 	}
 	
-	@RequestMapping(value="/authors/get",method=RequestMethod.GET)
-	public Author getAuthorList(@RequestParam int id) {		
-		return authorRepository.findById(id).get();
+	@RequestMapping(value="/authors/edit",method=RequestMethod.GET)
+	public String editAuthorList(@RequestParam int id, Model model) {		
+		model.addAttribute("author", authorRepository.getOne(id));
+		return "author_edit";
+	}
+	
+	@RequestMapping(value="/authors/delete",method=RequestMethod.GET)
+	public String deleteAuthor(@RequestParam int id, Model model) {		
+		authorRepository.deleteById(id);
+		return "redirect:/authors/";
 	}
 }

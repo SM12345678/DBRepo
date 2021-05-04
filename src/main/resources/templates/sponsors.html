@@ -11,8 +11,8 @@
 		<table class="table">
 			<tr>
 				<th>Sponsor Id</th>
-				<th>Sponsor Type</th>
 				<th>Sponsor Name</th>
+				<th>Sponsor Type</th>
 			</tr>
 			<tr th:each="sponsor : ${listOfSponsors}">
 				<td th:text="${sponsor.sponsorId}"></td>
@@ -46,13 +46,13 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-				  <label for="lastName" class="form-label">First Name</label>
+				  <label for="lastName" class="form-label">Last Name</label>
 				  <input class="form-control" id="lastName"  name="lastName" placeholder="Last Name">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-				  <label for="orgName" class="form-label">First Name</label>
+				  <label for="orgName" class="form-label">Org Name</label>
 				  <input class="form-control" id="orgName"  name="orgName" placeholder="Org Name">
 				</div>
 			</div>

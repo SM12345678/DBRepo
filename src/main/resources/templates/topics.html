@@ -1,59 +1,55 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head> 
-	<title>Developers database</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head th:insert="index :: header"> 
+	
 </head>
 <body>
-	<h1>Authors</h1>
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>state</th>
-			<th>city</th>
-			<th>zipcode</th>
-			<th>email</th>
-			
-		</tr>
-		<tr th:each="author : ${authors}">
-			<td th:text="${author.firstName + ' ' + author.lastName}"></td>
-			<td th:text="${author.state}"></td>
-			<td th:text="${author.city}"></td>
-			<td th:text="${author.zipcode}"></td>
-			<td th:text="${author.email}"></td>
-		<!--	<td>
-				<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
-			</td> -->
-		</tr>
-	</table>
+<nav th:insert="index :: nav-header"> </nav>
+
+	<div class="container">
+		<h3>Topics</h3>
+		<table class="table">
+			<tr>
+				<th>Topic Id</th>
+				<th>Topic Name</th>
+			</tr>
+			<tr th:each="topic : ${allTopicsList}">
+				<td th:text="${topic.topicId}"></td>
+				<td th:text="${topic.topicName}"></td>
+				<td>
+				  <a class="btn btn-primary" type="button" th:href="'/topics/edit?topicId=' + ${topic.topicId}" name="button">
+					Edit
+				  </a>
+				</td>
+				<td>
+					<a class="btn btn-danger" type="button" th:href="'/topics/delete?topicId=' + ${topic.topicId}" name="button">
+					Delete
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
 	<hr/>
 	
-	<form th:action="@{/authors}" method="post" enctype="multipart/form-data">
-		<div>
-			First name: <input name="firstName" />
-		</div>
-		<div>
-			Last name: <input name="lastName" />
-		</div>
-		<div>
-			Email: <input name="email" />
-		</div>
-		<div>
-			StreetAddresse: <input name="stAddress" />
-		</div>
-		<div>
-			City: <input name="city" />
-		</div>
-		<div>
-			State: <input name="state" />
-		</div>
-		<div>
-			Zipcode: <input name="zipCode" />
-		</div>
-		<div>
-			<input type="submit" value="Create author" name="button"/>
-		</div>
-	</form>
+	<div class="container">
+		<form th:action="@{/topics}" method="post" enctype="multipart/form-data">
+		    <div class="row">
+				<div class="col-md-6">
+				  <label for="topicName" class="form-label">Topic Name</label>
+				  <input class="form-control" id="topicName"  name="topicName" placeholder="Topic Name">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<input class="btn btn-primary" type="submit" value="Create Topic" name="button"/>
+				</div>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
 	
 </body>
 </html>
+

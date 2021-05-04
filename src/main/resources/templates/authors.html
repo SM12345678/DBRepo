@@ -4,55 +4,92 @@
 	
 </head>
 <body>
-	<h1>Authors</h1>
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>state</th>
-			<th>city</th>
-			<th>zipcode</th>
-			<th>email</th>
-			
-		</tr>
-		<tr th:each="author : ${authors}">
-			<td th:text="${author.firstName + ' ' + author.lastName}"></td>
-			<td th:text="${author.state}"></td>
-			<td th:text="${author.city}"></td>
-			<td th:text="${author.zipcode}"></td>
-			<td th:text="${author.email}"></td>
-		<!--	<td>
-				<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
-			</td> -->
-		</tr>
-	</table>
+	<nav th:insert="index :: nav-header"> </nav>
+	<div class="container">
+		<h3>Authors</h3>
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>state</th>
+				<th>city</th>
+				<th>zipcode</th>
+				<th>email</th>
+				
+			</tr>
+			<tr th:each="author : ${authors}">
+				<td th:text="${author.firstName + ' ' + author.lastName}"></td>
+				<td th:text="${author.state}"></td>
+				<td th:text="${author.city}"></td>
+				<td th:text="${author.zipcode}"></td>
+				<td th:text="${author.email}"></td>
+				<td>
+				  <a class="btn btn-primary" type="button" th:href="'/authors/edit?id=' + ${author.authorId}" name="button">
+					Edit
+				  </a>
+				</td>
+				<td>
+					<a class="btn btn-danger" type="button" th:href="'/authors/delete?id=' + ${author.authorId}" name="button">
+					Delete
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>		
 	<hr/>
-	
-	<form th:action="@{/authors}" method="post" enctype="multipart/form-data">
-		<div>
-			First name: <input name="firstName" />
-		</div>
-		<div>
-			Last name: <input name="lastName" />
-		</div>
-		<div>
-			Email: <input name="email" />
-		</div>
-		<div>
-			StreetAddresse: <input name="stAddress" />
-		</div>
-		<div>
-			City: <input name="city" />
-		</div>
-		<div>
-			State: <input name="state" />
-		</div>
-		<div>
-			Zipcode: <input name="zipCode" />
-		</div>
-		<div>
-			<input type="submit" value="Create author" name="button"/>
-		</div>
-	</form>
+	<div class="container">
+		<form th:action="@{/authors}" method="post" enctype="multipart/form-data">
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="firstName" class="form-label">First name</label>
+				  <input class="form-control" id="firstName"  name="firstName" placeholder="First name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="lastName" class="form-label">Last name</label>
+				  <input class="form-control" id="lastName"  name="lastName" placeholder="Last name">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="email" class="form-label">Email</label>
+				  <input class="form-control" id="email"  name="email" placeholder="Email">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="stAddress" class="form-label">Street Address</label>
+				  <input class="form-control" id="stAddress"  name="stAddress" placeholder="Street Address">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="city" class="form-label">City</label>
+				  <input class="form-control" id="city"  name="city" placeholder="City">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="state" class="form-label">State</label>
+				  <input class="form-control" id="state"  name="state" placeholder="State">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="zipCode" class="form-label">Zipcode</label>
+				  <input class="form-control" id="zipCode"  name="zipCode" placeholder="Zipcode">
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Create author" name="button"/>
+			</div>
+		</form>
+	<div class="container">
 	<span th:insert="index::footer">
 	</span>
 </body>

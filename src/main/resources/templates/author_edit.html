@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+		
+	<div class="container">
+		<form th:action="@{/authors}" method="post" enctype="multipart/form-data">
+		   
+    	   <div class="row">
+				<div class="col-md-6">
+				  <input class="form-control" id="authorId"  name="authorId"  th:value="${author.authorId}" hidden>
+				</div>
+		   </div>	
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="firstName" class="form-label">First name</label>
+				  <input class="form-control" id="firstName"  name="firstName" placeholder="First name" th:value="${author.firstName}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="lastName" class="form-label">Last name</label>
+				  <input class="form-control" id="lastName"  name="lastName" placeholder="Last name" th:value="${author.lastName}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="email" class="form-label">Email</label>
+				  <input class="form-control" id="email"  name="email" placeholder="Email" th:value="${author.email}">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="stAddress" class="form-label">Street Address</label>
+				  <input class="form-control" id="stAddress"  name="stAddress" placeholder="Street Address" th:value="${author.stAddress}">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="city" class="form-label">City</label>
+				  <input class="form-control" id="city"  name="city" placeholder="City" th:value="${author.city}">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="state" class="form-label">State</label>
+				  <input class="form-control" id="state"  name="state" placeholder="State" th:value="${author.state}">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="zipCode" class="form-label">Zipcode</label>
+				  <input class="form-control" id="zipCode"  name="zipCode" placeholder="Zipcode" th:value="${author.zipcode}">
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Save Changes" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+</body>
+</html>
+

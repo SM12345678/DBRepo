@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+		
+	<div class="container">
+		<form th:action="@{/sponsors}" method="post" enctype="multipart/form-data">
+		   
+    	   <div class="row">
+				<div class="col-md-6">
+				  <input class="form-control" id="sponsorId"  name="sponsorId"  th:value="${sponsor.sponsorId}" hidden>
+				  <input class="form-control" id="sponsorType"  name="sponsorType"  th:value="${sponsor.sponsorType}" hidden>
+				</div>
+		   </div>	
+		   <div class="row" th:if="${sponsor.individual}">
+				<div class="col-md-6">
+				  <label for="firstName" class="form-label">First Name</label>
+				  <input class="form-control" id="firstName"  name="firstName" placeholder="First Name" th:value="${sponsor.individual.firstName}">
+				</div>
+			</div>
+			<div class="row" th:if="${sponsor.individual}">
+				<div class="col-md-6">
+				  <label for="lastName" class="form-label">Last Name</label>
+				  <input class="form-control" id="lastName"  name="lastName" placeholder="Last Name" th:value="${sponsor.individual.lastName}">
+				</div>
+			</div>
+			<div class="row" th:if="${sponsor.organization}">
+				<div class="col-md-6">
+				  <label for="orgName" class="form-label">Org Name</label>
+				  <input class="form-control" id="orgName"  name="orgName" placeholder="Org Name" th:value="${sponsor.organization.orgName}">
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Save Changes" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+</body>
+</html>
+
