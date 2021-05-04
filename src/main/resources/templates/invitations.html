@@ -22,12 +22,12 @@
 				<td>
 					<a  th:href="'/events/edit?eventId=' + ${invitation.seminar.event.eventId}"><span th:text="${invitation.seminar.event.eventName}"> eventName </span></a>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 				  <a class="btn btn-primary" type="button" th:href="'/invitations/edit?id=' + ${invitation.invitationId}" name="button">
 					Edit
 				  </a>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 					<a class="btn btn-danger" type="button" th:href="'/invitations/delete?id=' + ${invitation.invitationId}" name="button">
 					Delete
 					</a>
@@ -40,7 +40,7 @@
 	</div>
 	<hr/>
 	
-	<div class="container">
+	<div class="container" sec:authorize="hasAuthority('ADMIN')">
 		<form th:action="@{/invitations}" method="post" enctype="multipart/form-data">
 		    
 			<div class="row">

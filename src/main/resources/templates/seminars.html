@@ -27,13 +27,13 @@
 					  	<span th:if="${seminarSponsor.sponsor.individual}" th:text="${'I - '+seminarSponsor.sponsor.individual.firstName + ' '+seminarSponsor.sponsor.individual.lastName}"> I </span>
 					  	<span th:if="${seminarSponsor.sponsor.organization}" th:text="${'O - '+seminarSponsor.sponsor.organization.orgName}"> O </span>
 					  	<span th:text="' AMT-' + ${seminarSponsor.amount}"></span>
-				  		<a th:href="'/seminars/removesponsor?eventId=' + ${seminar.event.eventId}+'&sponsorId='+${seminarSponsor.sponsor.sponsorId} " name="button" class="btn-danger">
+				  		<a th:href="'/seminars/removesponsor?eventId=' + ${seminar.event.eventId}+'&sponsorId='+${seminarSponsor.sponsor.sponsorId} " name="button" class="btn-danger" sec:authorize="hasAuthority('ADMIN')">
 							x
 					  	</a>
 					  	
 					  </li>
-					  <li>
-					  	<form th:action="@{/seminars/addSponsor}" method="post" enctype="multipart/form-data">						    
+					  <li sec:authorize="hasAuthority('ADMIN')">
+					  	<form th:action="@{/seminars/addSponsor}" method="post" enctype="multipart/form-data" >						    
 							<div class="row">
 									<input class="form-control" id="eventId"  name="eventId"  th:value="${seminar.event.eventId}" hidden>
 									<select class="form-select" name="sponsorId">

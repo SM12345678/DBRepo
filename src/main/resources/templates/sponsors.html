@@ -21,12 +21,12 @@
 					 <span th:if="${sponsor.organization}" th:text="${sponsor.organization.orgName}"> O </span>
 				</td>
 				<td th:text="${sponsor.sponsorType}"></td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 				  <a class="btn btn-primary" type="button" th:href="'/sponsors/edit?sponsorId=' + ${sponsor.sponsorId}" name="button">
 					Edit
 				  </a>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 					<a class="btn btn-danger" type="button" th:href="'/sponsors/delete?sponsorId=' + ${sponsor.sponsorId}" name="button">
 					Delete
 					</a>
@@ -36,7 +36,7 @@
 	</div>
 	<hr/>
 	
-	<div class="container">
+	<div class="container" sec:authorize="hasAuthority('ADMIN')">
 		<form th:action="@{/sponsors}" method="post" enctype="multipart/form-data">
 		    <div class="row">
 				<div class="col-md-6">

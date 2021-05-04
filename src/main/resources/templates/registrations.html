@@ -17,37 +17,34 @@
 			<tr th:each="registration : ${listOfRegistrations}">
 				<td th:text="${registration.registrationId}"></td>
 				<td>
-					<span th:text="${registration.customer.fullName}"> fullName </span>
+					<span th:text="${registration.customer.fName +' '+registration.customer.lName }"> fullName </span>
 				</td>
 				<td>
 					<a  th:href="'/events/edit?eventId=' + ${registration.exhibition.event.eventId}"><span th:text="${registration.exhibition.event.eventName}"> eventName </span></a>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')" >
 				  <a class="btn btn-primary" type="button" th:href="'/registrations/edit?id=' + ${registration.registrationId}" name="button">
 					Edit
 				  </a>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 					<a class="btn btn-danger" type="button" th:href="'/registrations/delete?id=' + ${registration.registrationId}" name="button">
 					Delete
 					</a>
 				</td>
-			<!--	<td>
-					<a th:href="@{/developer/{id}(id=${developer.id})}">view</a>
-				</td> -->
 			</tr>
 		</table>
 	</div>
 	<hr/>
 	
-	<div class="container">
+	<div class="container" sec:authorize="hasAuthority('ADMIN')">
 		<form th:action="@{/registrations}" method="post" enctype="multipart/form-data">
 		    
 			<div class="row">
 				<div class="col-md-6">
 				  <label for="eventType" class="form-label">Select Customer</label>
 				  <select class="form-select" name="cusId">
-					  <option th:each="customer : ${listOfCustomers}" th:value="${customer.id}" th:text="${customer.fullName} +' '+${customer.idNumber}+' '+${customer.idType}"></option>
+					  <option th:each="customer : ${listOfCustomers}" th:value="${customer.id}" th:text="${customer.fName} +' '+${customer.lName} +' '+${customer.idNumber}+' '+${customer.idType}"></option>
 					</select>
 				</div>
 			</div>

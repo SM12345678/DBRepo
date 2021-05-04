@@ -28,12 +28,12 @@
 				<td>
 					<span th:text="*{event.exhibition != null}? *{event.exhibition.expenses} : '-NA-'">NA</span>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 				  <a class="btn btn-primary" type="button" th:href="'/events/edit?eventId=' + ${event.eventId}" name="button">
 					Edit
 				  </a>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 					<a class="btn btn-danger" type="button" th:href="'/events/delete?eventId=' + ${event.eventId}" name="button">
 					Delete
 					</a>
@@ -46,7 +46,7 @@
 	</div>
 	<hr/>
 	
-	<div class="container">
+	<div class="container" sec:authorize="hasAuthority('ADMIN')" >
 		<form th:action="@{/events}" method="post" enctype="multipart/form-data">
 		    <div class="row">
 				<div class="col-md-6">

@@ -22,12 +22,12 @@
 				<td th:text="${author.city}"></td>
 				<td th:text="${author.zipcode}"></td>
 				<td th:text="${author.email}"></td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')" >
 				  <a class="btn btn-primary" type="button" th:href="'/authors/edit?id=' + ${author.authorId}" name="button">
 					Edit
 				  </a>
 				</td>
-				<td>
+				<td sec:authorize="hasAuthority('ADMIN')">
 					<a class="btn btn-danger" type="button" th:href="'/authors/delete?id=' + ${author.authorId}" name="button">
 					Delete
 					</a>
@@ -36,7 +36,7 @@
 		</table>
 	</div>		
 	<hr/>
-	<div class="container">
+	<div class="container" sec:authorize="hasAuthority('ADMIN')">
 		<form th:action="@{/authors}" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-md-6">
