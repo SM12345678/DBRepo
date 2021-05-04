@@ -30,13 +30,16 @@
                              
                             </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/authors}">Authors</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/events}">Events</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/registrations}">Registartions</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/invitations}">Invitations</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/seminars}">Seminars</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/sponsors}">Sponsors</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/topics}">Topics</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/a/authors}">Authors</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/a/events}">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/a/registrations}">Registartions</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/a/invitations}">Invitations</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/a/seminars}">Seminars</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/a/sponsors}">Sponsors</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/a/topics}">Topics</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/register}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -44,12 +47,10 @@
         <!-- Page content-->
         <div class="container">
             <div class="text-center">
-                <h1 class="mt-5">A Bootstrap 4 Starter Template</h1>
-                <p class="lead">A complete project boilerplate built with Bootstrap</p>
-                <ul class="list-unstyled">
-                    <li>Bootstrap 4.6.0</li>
-                    <li>jQuery 3.5.1</li>
-                </ul>
+                <p>
+                	Welcome <div sec:authorize="isAuthenticated()">
+      Authenticated as <span sec:authentication="name"></span></div>
+            	</p>
             </div>
         </div>
         

@@ -32,7 +32,7 @@ public class RegistrationController {
 	@Autowired
 	CustomerRepository customerRepository;
 	
-	@RequestMapping(value="/registrations",method=RequestMethod.GET)
+	@RequestMapping(value="/a/registrations",method=RequestMethod.GET)
 	public String registrationList(Model model) {
 		List<Registration> listOfRegistrations = registrationRepository.findAll();
 		model.addAttribute("listOfRegistrations", listOfRegistrations);
@@ -47,13 +47,13 @@ public class RegistrationController {
 		Customer c = customerRepository.getOne(cusId);
 		Registration reg = new Registration(null, e, c);
 		registrationRepository.save(reg);
-		return "redirect:/registrations";
+		return "redirect:/a/registrations";
 	}
 	
 	@RequestMapping(value="/registrations/delete",method=RequestMethod.GET)
 	public String deleteEvent(@RequestParam int id,Model model) {
 		registrationRepository.deleteById(id);		
-		return "redirect:/registrations/";
+		return "redirect:/a/registrations/";
 	}
 	
 	@RequestMapping(value="/registrations/update",method=RequestMethod.POST)
@@ -62,7 +62,7 @@ public class RegistrationController {
 		Customer c = customerRepository.getOne(cusId);
 		Registration reg = new Registration(id, e, c);
 		registrationRepository.save(reg);
-		return "redirect:/registrations";
+		return "redirect:/a/registrations";
 	}
 	
 	@RequestMapping(value="/registrations/edit",method=RequestMethod.GET)

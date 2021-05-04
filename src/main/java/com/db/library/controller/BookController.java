@@ -46,7 +46,7 @@ public class BookController {
 	@Autowired
 	private AuthorRepository authorRepository;
 
-	@RequestMapping(value = "/books", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books", method = RequestMethod.GET)
 	public String booksList(Model model) {
 		
 		Session session = sessionFactory.openSession();
@@ -114,7 +114,7 @@ public class BookController {
 
 	}
 
-	@RequestMapping(value = "/books/get/", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books/get/", method = RequestMethod.GET)
 	public String getBook(@RequestParam(value = "id", required = false) String id, Model model) {
 		id = String.valueOf(model.getAttribute("id"));
 		
@@ -192,7 +192,7 @@ public class BookController {
 		tx.commit();
         session.close();
         
-		return new ModelAndView("redirect:/books/");
+		return new ModelAndView("redirect:/a/books/");
 
 	}
 
@@ -224,7 +224,7 @@ public class BookController {
 	
 	
 	
-	@RequestMapping(value = "/books/copies", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books/copies", method = RequestMethod.GET)
 	public String booksCopyList(@RequestParam(value = "id", required = false) String id, Model model) {
 		
 		Session session = sessionFactory.openSession();

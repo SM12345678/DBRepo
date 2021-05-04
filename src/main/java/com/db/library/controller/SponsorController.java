@@ -32,7 +32,7 @@ public class SponsorController {
 	@Autowired
 	private OrgRepository orgRepository;
 	
-	@RequestMapping(value="/sponsors",method=RequestMethod.GET)
+	@RequestMapping(value="/a/sponsors",method=RequestMethod.GET)
 	public String sponsorList(Model model) {
 		
 		model.addAttribute("listOfSponsors", sponsorRepository.findAll());
@@ -56,7 +56,7 @@ public class SponsorController {
 			orgRepository.deleteById(sponsorId);
 		}
 		//sponsorRepository.deleteById(sponsorId);
-		return "redirect:/sponsors/";
+		return "redirect:/a/sponsors/";
 	}
 //	
 //	
@@ -74,6 +74,6 @@ public class SponsorController {
 		} else {
 			individualRepository.save(new Individual(sponsor.getSponsorId(),firstName,lastName,sponsor));
 		}
-		return "redirect:/sponsors/";
+		return "redirect:/a/sponsors/";
 	}
 }

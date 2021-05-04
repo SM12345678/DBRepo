@@ -29,7 +29,7 @@ public class SeminarController {
 	
 	
 	
-	@RequestMapping(value="/seminars",method=RequestMethod.GET)
+	@RequestMapping(value="/a/seminars",method=RequestMethod.GET)
 	public String seminarList(Model model) {
 		model.addAttribute("listOfSeminars", seminarRepository.findAll());
 		model.addAttribute("listOfSponsors", sponsorRepository.findAll());
@@ -43,7 +43,7 @@ public class SeminarController {
 		SeminarSponsorId ssId = new SeminarSponsorId(eventId, sponsorId);
 		SeminarSponsor seminarSponsor = new SeminarSponsor(ssId,seminarRepository.getOne(eventId),sponsorRepository.getOne(sponsorId),amount);
 		seminarSponsorRepository.save(seminarSponsor);
-		return "redirect:/seminars/";
+		return "redirect:/a/seminars/";
 	}
 	
 	@RequestMapping(value="/seminars/removesponsor",method=RequestMethod.GET)
@@ -51,6 +51,6 @@ public class SeminarController {
 		
 		SeminarSponsorId ssId = new SeminarSponsorId(eventId, sponsorId);		
 		seminarSponsorRepository.deleteById(ssId);
-		return "redirect:/seminars/";
+		return "redirect:/a/seminars/";
 	}
 }

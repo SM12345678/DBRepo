@@ -20,7 +20,7 @@ public class Author {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="author_id")
-	private int authorId;
+	private Integer authorId;
 	@Column(name="first_Name")
 	private String firstName;
 	@Column(name="last_Name")
@@ -38,7 +38,7 @@ public class Author {
 	}
 	
 	
-	public Author(int authorId, String firstName, String lastName, String stAddress, String city, String state,
+	public Author(Integer authorId, String firstName, String lastName, String stAddress, String city, String state,
 			String zipcode, String email) {
 		super();
 		this.authorId = authorId;
@@ -63,10 +63,10 @@ public class Author {
 		this.email = email;
 	}
 	
-	public int getAuthorId() {
+	public Integer getAuthorId() {
 		return authorId;
 	}
-	public void setAuthorId(int authorId) {
+	public void setAuthorId(Integer authorId) {
 		this.authorId = authorId;
 	}
 	public String getFirstName() {

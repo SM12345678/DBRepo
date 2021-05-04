@@ -35,16 +35,19 @@ public class EventService {
 		}
 	}
 	
+	
 	@Transactional
 	public void deleteEvent(Integer eventId) {
 		
 		Event newEvent = eventRepository.getOne(eventId);
-		if(newEvent.getEventType()=='S'&&newEvent.getSeminar()!=null) {
+		if(newEvent.getSeminar()!=null) {
 			seminarRepository.deleteById(eventId);
 		}else if(newEvent.getExhibition()!=null) {
 			exhibitionRepository.deleteById(eventId);
+		}else {
+			eventRepository.deleteById(eventId);
 		}
-		eventRepository.deleteById(eventId);
+		
 	}
 	
 	public List<Event> getAllEvents() {
@@ -53,5 +56,11 @@ public class EventService {
 	
 	public Event getEvent(Integer eventId) {
 		return eventRepository.getOne(eventId);
+	}
+
+
+	public void saveEvent(Event e1) {
+		eventRepository.save(e1);
+		
 	}
 }

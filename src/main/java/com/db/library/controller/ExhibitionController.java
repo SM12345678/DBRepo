@@ -20,7 +20,7 @@ public class ExhibitionController {
 	private ExhibitionRepository exhibitionRepository;
 	
 	
-	@RequestMapping(value="/getall",method=RequestMethod.GET)
+	@RequestMapping(value="/a/getall",method=RequestMethod.GET)
 	public String exhibitionList(Model model) {	
 		model.addAttribute("exhibitions", exhibitionRepository.findAll());
 		return "exhibitions";
@@ -33,7 +33,7 @@ public class ExhibitionController {
 		Exhibition e1 = new Exhibition(eventId, expenses);
 		exhibitionRepository.save(e1);
 		model.addAttribute("exhibition", exhibitionRepository.findAll());
-		return "redirect:/exhibition/getall/";
+		return "redirect:/a/exhibition/getall/";
 		
 	}
 	

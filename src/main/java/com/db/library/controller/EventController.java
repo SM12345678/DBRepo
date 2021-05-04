@@ -28,7 +28,7 @@ public class EventController {
 	private TopicRepository topicRepository;
 	
 	
-	@RequestMapping(value="/events",method=RequestMethod.GET)
+	@RequestMapping(value="/a/events",method=RequestMethod.GET)
 	public String eventList(Model model) {
 		List<Event> listOfEvents = eventService.getAllEvents();
 		List<Topic> listOfTopics = topicRepository.findAll();
@@ -53,7 +53,7 @@ public class EventController {
 		List<Topic> listOfTopics = topicRepository.findAll();
 		model.addAttribute("listOfEvents", listOfEvents);
 		model.addAttribute("listOfTopics", listOfTopics);
-		return "redirect:/events/";
+		return "redirect:/a/events/";
 	}
 	
 	
@@ -65,18 +65,24 @@ public class EventController {
 		eventService.createEvent(e1, expenses);
 		model.addAttribute("events", eventService.getAllEvents());
 		model.addAttribute("listOfTopics", topicRepository.findAll());
-		return "redirect:/events/";
+		return "redirect:/a/events/";
 	}
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss", Locale.ENGLISH);
 	@RequestMapping(value="/events/update",method=RequestMethod.POST)
 	public String eventUpdate(@RequestParam Integer eventId,@RequestParam String eventName, @RequestParam String eventStartDatetime, 
 			@RequestParam String eventStopDatetime, @RequestParam int topicId, @RequestParam char eventType,Double expenses,Model model) throws ParseException {
 		Topic tp = topicRepository.getOne(topicId);
-		Event e1 = new Event(eventId, eventName, formatter.parse(eventStartDatetime), formatter.parse(eventStopDatetime), tp, eventType);
-		eventService.createEvent(e1, expenses);
+		Event e1 = eventService.getEvent(eventId);
+		e1.setEventName(eventName);
+		e1.setEventStartDatetime( formatter.parse(eventStartDatetime));
+		e1.setEventStopDateTime(formatter.parse(eventStopDatetime)); 
+		e1.setTopic(tp);
+		if(e1.getExhibition()!=null)
+			e1.getExhibition().setExpenses(expenses);
+		eventService.saveEvent(e1);
 		model.addAttribute("events", eventService.getAllEvents());
 		model.addAttribute("listOfTopics", topicRepository.findAll());
-		return "redirect:/events/";
+		return "redirect:/a/events/";
 	}
 	
 }

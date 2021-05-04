@@ -20,7 +20,7 @@ public class AuthorController {
 	@Autowired
 	private AuthorRepository authorRepository;
 	
-	@RequestMapping(value="/authors",method=RequestMethod.GET)
+	@RequestMapping(value="/a/authors",method=RequestMethod.GET)
 	public String authorsList(Model model) {	
 		List<Author> authorList=  authorRepository.findAll();
 		model.addAttribute("authors", authorList);
@@ -31,13 +31,12 @@ public class AuthorController {
 
 	
 	@RequestMapping(value="/authors",method=RequestMethod.POST)
-	public String authorsAdd(@RequestParam(required = false) Integer authorId,@RequestParam String firstName, @RequestParam String lastName, 
+	public String authorsAdd(@RequestParam(required = false) Integer authorId,@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, 
 			@RequestParam String email, @RequestParam String city, @RequestParam String state,
-			@RequestParam String zipCode, @RequestParam String stAddress,  Model model) {	
+			@RequestParam(required = false) String zipCode, @RequestParam(required = false) String stAddress,  Model model) {	
 		Author a1 = new Author(authorId,firstName, lastName, stAddress, city, state, zipCode, email);
 		authorRepository.save(a1);
-		model.addAttribute("authors", authorRepository.findAll());
-		return "redirect:/authors/";
+		return "redirect:/a/authors/";
 		
 	}
 	
@@ -50,6 +49,6 @@ public class AuthorController {
 	@RequestMapping(value="/authors/delete",method=RequestMethod.GET)
 	public String deleteAuthor(@RequestParam int id, Model model) {		
 		authorRepository.deleteById(id);
-		return "redirect:/authors/";
+		return "redirect:/a/authors/";
 	}
 }

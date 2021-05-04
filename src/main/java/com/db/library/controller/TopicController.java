@@ -1,6 +1,7 @@
 package com.db.library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,7 @@ public class TopicController {
 	@Autowired
 	private TopicRepository topicRepository;
 	
-	
-	@RequestMapping(value="/topics",method=RequestMethod.GET)
+	@RequestMapping(value="/a/topics",method=RequestMethod.GET)
 	public String topicList(Model model) {
 		model.addAttribute("allTopicsList", topicRepository.findAll());
 		return "topics";
@@ -28,13 +28,13 @@ public class TopicController {
 	public String topicAdd(@RequestParam(required = false) Integer topicId, String topicName,Model model) {
 		Topic t = new Topic(topicId, topicName);
 		topicRepository.save(t);
-		return "redirect:/topics";
+		return "redirect:/a/topics";
 	}
 	
 	@RequestMapping(value="/topics/delete",method=RequestMethod.GET)
 	public String deleteTopic(@RequestParam  Integer topicId,Model model) {
 		topicRepository.deleteById(topicId);
-		return "redirect:/topics";
+		return "redirect:/a/topics";
 	}
 	
 	@RequestMapping(value="/topics/edit",method=RequestMethod.GET)

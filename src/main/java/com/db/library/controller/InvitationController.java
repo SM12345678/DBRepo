@@ -34,7 +34,7 @@ public class InvitationController {
 	private SeminarRepository seminarRepository;
 	
 	
-	@RequestMapping(value="/invitations",method=RequestMethod.GET)
+	@RequestMapping(value="/a/invitations",method=RequestMethod.GET)
 	public String invitationsList(Model model) {	
 		model.addAttribute("listOfInvitations", invitationRepository.findAll());
 		model.addAttribute("listOfAuthors", authorRepository.findAll());
@@ -50,14 +50,14 @@ public class InvitationController {
 		Invitation a1 = new Invitation(null,seminarRepository.getOne(eventId), authorRepository.getOne(authorId));
 		invitationRepository.save(a1);
 		model.addAttribute("invitations", invitationRepository.findAll());
-		return "redirect:/invitations/";
+		return "redirect:/a/invitations/";
 		
 	}
 	
 	@RequestMapping(value="/invitations/delete",method=RequestMethod.GET)
 	public String deleteInvitation(@RequestParam int id,Model model) {
 		invitationRepository.deleteById(id);		
-		return "redirect:/invitations/";
+		return "redirect:/a/invitations/";
 	}
 	
 	@RequestMapping(value="/invitations/update",method=RequestMethod.POST)
@@ -66,7 +66,7 @@ public class InvitationController {
 		Author a = authorRepository.getOne(authorId);
 		Invitation inv = new Invitation(id,s,a );
 		invitationRepository.save(inv);
-		return "redirect:/invitations";
+		return "redirect:/a/invitations";
 	}
 	
 	@RequestMapping(value="/invitations/edit",method=RequestMethod.GET)

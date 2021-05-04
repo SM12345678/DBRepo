@@ -16,15 +16,6 @@ public class Customer {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	/*
-	 *  cus_id         BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'This is customer id',
-    id_type        VARCHAR(30) NOT NULL COMMENT 'This is customer id type',
-    id_number      VARCHAR(30) NOT NULL COMMENT 'Identification number of a given ID type',
-    full_name      VARCHAR(30) NOT NULL COMMENT 'This customer full name.',
-    phone_number   BIGINT NOT NULL COMMENT 'This is customer phone number.',
-    email_address  VARCHAR(100) NOT NULL COMMENT 'This is customer email address.'
-	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="cus_id")
@@ -41,6 +32,40 @@ public class Customer {
 	
 	private String emailAddress;
 	
+	 @Column(nullable = false, length = 64)
+	 private String password;
+	     
+	 public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	@Column(name = "is_admin", nullable = true)
+	 private Boolean isAdmin;
+	
+	public Customer(Integer id, String idType, String idNumber, String fullName, long phoneNumber, String emailAddress,
+			String password, Boolean isAdmin) {
+		super();
+		this.id = id;
+		this.idType = idType;
+		this.idNumber = idNumber;
+		this.fullName = fullName;
+		this.phoneNumber = phoneNumber;
+		this.emailAddress = emailAddress;
+		this.password = password;
+		this.isAdmin = isAdmin;
+	}
+
 	public Customer(Integer id, String idType, String idNumber, String fullName, long phoneNumber,
 			String emailAddress) {
 		super();
