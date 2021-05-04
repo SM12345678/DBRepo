@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "sm_authors")
 public class Author {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="author_id")
 	private int authorId;
 	@Column(name="first_Name")
