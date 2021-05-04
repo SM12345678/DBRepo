@@ -170,10 +170,10 @@ public class Book implements Serializable {
 	public String BookStatus;
 	
 	public String setBookStatus() {
-		if(availableCopyId>0)
+		if(availableCopyId!=null && availableCopyId>0)
 	        this.BookStatus ="Available";
 		else this.BookStatus ="Not Available";
-		return this.BookStatus;
+		return "Not Available";
     }
 	
 }

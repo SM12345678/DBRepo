@@ -2,6 +2,7 @@ package com.db.library.controller;
 
 import java.io.Console;
 import java.math.BigInteger;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,13 +41,14 @@ import com.db.library.model.Topic;
 import com.db.library.repository.AuthorRepository;
 import com.db.library.repository.BookCopyRepository;
 import com.db.library.repository.BookRepository;
+import com.db.library.repository.CustomerRepository;
 import com.db.library.repository.RentalRepository;
 import com.db.library.repository.TopicRepository;
 
 @Controller
 public class RentalController {
 
-	int customerId = 1;
+	
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -68,10 +70,13 @@ public class RentalController {
 
 	@Autowired
 	private RentalRepository rentalRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	@RequestMapping(value = "/a/rentals", method = RequestMethod.GET)
-	public String booksListwithStatus(Model model) {
-
+	public String booksListwithStatus(Model model,Principal p) {
+		int customerId = customerRepository.findByEmailAddress(p.getName()).getId();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		List<Book> bookList = bookRepository.findByDeleted(0);
@@ -118,8 +123,8 @@ public class RentalController {
 	}
 
 	@RequestMapping(value = "/a/rentals/rent", method = RequestMethod.GET)
-	public String rentBookCopy(@RequestParam(value = "id", required = false) String id, Model model) {
-
+	public String rentBookCopy(@RequestParam(value = "id", required = false) String id, Model model,Principal p) {
+		int customerId = customerRepository.findByEmailAddress(p.getName()).getId();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		// id=String.valueOf(model.getAttribute("id"));
@@ -145,8 +150,8 @@ public class RentalController {
 	}
 
 	@RequestMapping(value = "/a/rental/cust/history", method = RequestMethod.GET)
-	public String rentalHistory(@RequestParam(value = "id", required = false) String id, Model model) {
-
+	public String rentalHistory(@RequestParam(value = "id", required = false) String id, Model model,Principal p) {
+		int customerId = customerRepository.findByEmailAddress(p.getName()).getId();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction(); // id=String.valueOf(model.getAttribute("id"));
 
