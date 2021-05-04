@@ -21,9 +21,7 @@ import com.db.library.repository.AuthorRepository;
 public class AuthorController {
 	@Autowired
 	private SessionFactory sessionFactory;
-	@Autowired
-	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	private AuthorRepository authorRepository;
 	
@@ -67,8 +65,7 @@ public class AuthorController {
 	}
 	
 	@RequestMapping(value="/authors/delete",method=RequestMethod.GET)
-	public String deleteAuthor(@RequestParam int id, Model model) {
-	public String deleteAuthor(@RequestParam int id, Model model) {		
+	public String deleteAuthor(@RequestParam int id, Model model) {	
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		authorRepository.deleteById(id);
