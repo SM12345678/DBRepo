@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>RTL Library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], select {
+        display: inline-block;
+        width: 200px;
+    }
+    input[type=radio] {
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        margin-right: 190px;
+    }  
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+	<h1>Rental History</h1>
+	<table>
+		<tr>
+		    <th>Book Rental Status</th>
+		     <th>Rental Id</th>
+			<th>Book Name</th>
+			<th>Book Author(s)</th>
+			<th>Book Topic</th>
+			<th>Book Copy Id(s)</th>
+			<th>Borrowed Date</th>
+			<th>Expected Return Date</th>
+			<th>Actual Return Date</th>
+		</tr>
+		<tr th:each="rental : ${rentals}">
+		     <td th:text="${rental.StatusText}"></td>
+		     <td th:text="${rental.rentalid}"></td>
+			 <td th:text="${rental.bookName}"></td>
+			 <td th:text="${rental.authorsString}"></td>
+			 <td th:text="${rental.topicName}"></td>
+			 <td th:text="${rental.bokcopyid}"></td>
+			 <td th:text="${rental.borrowdate}"></td>
+			 <td th:text="${rental.expectedreturndate}"></td>
+			 <td th:text="${rental.actualreturndate}"></td>
+			 <td th:if="${book.isamountPending}"> <a th:href=@{/rentals/payment(id=${rental.rid})} >Return Book</a></td>
+		</tr>
+	</table>
+	<hr />
+<Div><a th:href="@{/rentals}">Go to Rentals Home</a></Div> 
+</body>
+</html>

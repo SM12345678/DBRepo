@@ -141,4 +141,39 @@ public class Book implements Serializable {
 		deleted=1;
 	}
 
+	@Transient 
+	public Integer availableCopyId;
+	
+	public Integer getAvailableCopyId() {
+        return this.availableCopyId;
+    }
+	public void setAvailableCopyId(Integer availableCopyId) {
+        this.availableCopyId=availableCopyId;
+    }
+	
+	@Transient 
+	public Boolean makerentable;
+	
+	public Boolean getMakerentable() {
+		if(availableCopyId>0)
+	        this.makerentable =true;
+		else this.makerentable =false;
+		return this.makerentable;
+    }
+	public void setMakerentable() {
+		if(this.availableCopyId>0)
+	        this.makerentable =true;
+		else this.makerentable =false;
+		
+    }
+	@Transient 
+	public String BookStatus;
+	
+	public String setBookStatus() {
+		if(availableCopyId>0)
+	        this.BookStatus ="Available";
+		else this.BookStatus ="Not Available";
+		return this.BookStatus;
+    }
+	
 }

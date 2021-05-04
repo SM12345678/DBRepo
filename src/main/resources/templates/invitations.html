@@ -45,7 +45,7 @@
 		    
 			<div class="row">
 				<div class="col-md-6">
-				  <label for="authorId" class="form-label">Select Customer</label>
+				  <label for="authorId" class="form-label">Select Author</label>
 				  <select class="form-select" name="authorId">
 					  <option th:each="author : ${listOfAuthors}" th:value="${author.authorId}" th:text="${author.authorId}+' - '+ ${author.firstName}+ ' '+${author.lastName}"></option>
 					</select>
@@ -54,7 +54,7 @@
 			
 			<div class="row">
 				<div class="col-md-6">
-				  <label for="eventId" class="form-label">Select Exhibition</label>
+				  <label for="eventId" class="form-label">Select Seminars</label>
 				  <select class="form-select" name="eventId"> 
 					  <option th:each="seminar : ${listOfSeminars}" th:value="${seminar.eventId}" th:text="${seminar.event.eventId} +' - '+${seminar.event.eventName}"></option>
 					</select>
