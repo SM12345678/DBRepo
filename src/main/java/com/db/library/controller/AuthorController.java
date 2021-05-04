@@ -3,6 +3,9 @@ package com.db.library.controller;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,9 @@ import com.db.library.repository.AuthorRepository;
 
 @Controller
 public class AuthorController {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@Autowired
 	private AuthorRepository authorRepository;
@@ -35,7 +41,11 @@ public class AuthorController {
 			@RequestParam String email, @RequestParam String city, @RequestParam String state,
 			@RequestParam(required = false) String zipCode, @RequestParam(required = false) String stAddress,  Model model) {	
 		Author a1 = new Author(authorId,firstName, lastName, stAddress, city, state, zipCode, email);
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		authorRepository.save(a1);
+		tx.commit();
+		session.close();
 		return "redirect:/a/authors/";
 		
 	}
@@ -47,8 +57,12 @@ public class AuthorController {
 	}
 	
 	@RequestMapping(value="/authors/delete",method=RequestMethod.GET)
-	public String deleteAuthor(@RequestParam int id, Model model) {		
+	public String deleteAuthor(@RequestParam int id, Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		authorRepository.deleteById(id);
+		tx.commit();
+		session.close();
 		return "redirect:/a/authors/";
 	}
 }

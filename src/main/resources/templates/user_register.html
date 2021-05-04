@@ -12,12 +12,42 @@
 		</div>
 		<form th:action="@{/registeruser}" method="post" th:object="${user}">
 		
+			
+		
 			<div class="=row">                
                 <div class="col-md-6">
-                	<label class="form-label">User Name: </label>
-                    <input  th:field="*{userName}" class="form-control" required />
+                	<label class="form-label">Email Address: </label>
+                    <input  th:field="*{emailAddress}" class="form-control" required />
                 </div>
             </div>
+            <div class="=row">                
+                <div class="col-md-6">
+                	<label class="form-label">Id Type: </label>
+                    <input  th:field="*{idType}" class="form-control" required />
+                </div>
+            </div>
+            
+            <div class="=row">                
+                <div class="col-md-6">
+                	<label class="form-label">Id Number: </label>
+                    <input  th:field="*{idNumber}" class="form-control" required />
+                </div>
+            </div>
+            
+            <div class="=row">                
+                <div class="col-md-6">
+                	<label class="form-label">Full Name: </label>
+                    <input  th:field="*{fullName}" class="form-control" required />
+                </div>
+            </div>
+            
+            <div class="=row">                
+                <div class="col-md-6">
+                	<label class="form-label">Phone Number: </label>
+                    <input  th:field="*{phoneNumber}" class="form-control" required />
+                </div>
+            </div>
+            
             <div class="=row">                
                 <div class="col-md-6">
                 	<label class="form-label">Password: </label>

@@ -1,5 +1,8 @@
 package com.db.library.controller;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,10 @@ import com.db.library.repository.TopicRepository;
 
 @Controller
 public class TopicController {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Autowired
 	private TopicRepository topicRepository;
 	
@@ -26,20 +33,32 @@ public class TopicController {
 	
 	@RequestMapping(value="/topics",method=RequestMethod.POST)
 	public String topicAdd(@RequestParam(required = false) Integer topicId, String topicName,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Topic t = new Topic(topicId, topicName);
 		topicRepository.save(t);
+		tx.commit();
+		session.close();
 		return "redirect:/a/topics";
 	}
 	
 	@RequestMapping(value="/topics/delete",method=RequestMethod.GET)
 	public String deleteTopic(@RequestParam  Integer topicId,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		topicRepository.deleteById(topicId);
+		tx.commit();
+		session.close();
 		return "redirect:/a/topics";
 	}
 	
 	@RequestMapping(value="/topics/edit",method=RequestMethod.GET)
 	public String sponsorEdit(@RequestParam Integer topicId,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		model.addAttribute("topic", topicRepository.getOne(topicId));
+		tx.commit();
+		session.close();
 		return "topic_edit";
 	}
 	

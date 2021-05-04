@@ -2,7 +2,7 @@ package com.db.library.controller;
 
 import java.util.List;
 
-
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +23,9 @@ import com.db.library.repository.SeminarRepository;
 
 @Controller
 public class InvitationController {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@Autowired
 	private InvitationRepository invitationRepository;

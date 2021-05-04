@@ -3,6 +3,9 @@ package com.db.library.controller;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,9 @@ import com.db.library.service.EventService;
 public class RegistrationController {
 	
 	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@Autowired
 	RegistrationRepository registrationRepository;
 	
 	@Autowired
@@ -43,25 +49,37 @@ public class RegistrationController {
 	
 	@RequestMapping(value="/registrations",method=RequestMethod.POST)
 	public String registrationAdd(@RequestParam Integer cusId, @RequestParam Integer eventId ,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Exhibition e = exhibitionRepository.getOne(eventId);
 		Customer c = customerRepository.getOne(cusId);
 		Registration reg = new Registration(null, e, c);
 		registrationRepository.save(reg);
+		tx.commit();
+		session.close();
 		return "redirect:/a/registrations";
 	}
 	
 	@RequestMapping(value="/registrations/delete",method=RequestMethod.GET)
 	public String deleteEvent(@RequestParam int id,Model model) {
-		registrationRepository.deleteById(id);		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		registrationRepository.deleteById(id);	
+		tx.commit();
+		session.close();
 		return "redirect:/a/registrations/";
 	}
 	
 	@RequestMapping(value="/registrations/update",method=RequestMethod.POST)
 	public String registrationAdd(@RequestParam int id,@RequestParam Integer cusId, @RequestParam Integer eventId ,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Exhibition e = exhibitionRepository.getOne(eventId);
 		Customer c = customerRepository.getOne(cusId);
 		Registration reg = new Registration(id, e, c);
 		registrationRepository.save(reg);
+		tx.commit();
+		session.close();
 		return "redirect:/a/registrations";
 	}
 	

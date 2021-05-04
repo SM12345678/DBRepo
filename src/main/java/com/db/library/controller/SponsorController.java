@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,9 @@ import com.db.library.repository.SponsorRepository;
 
 @Controller
 public class SponsorController {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@Autowired
 	private SponsorRepository sponsorRepository;
@@ -48,6 +54,8 @@ public class SponsorController {
 	
 	@RequestMapping(value="/sponsors/delete",method=RequestMethod.GET)
 	public String deleteSponsor(@RequestParam  Integer sponsorId,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Sponsor sponsor = sponsorRepository.getOne(sponsorId);
 		if(sponsor.getIndividual()!=null) {
 			individualRepository.deleteById(sponsorId);
@@ -55,6 +63,8 @@ public class SponsorController {
 		if(sponsor.getOrganization()!=null) {
 			orgRepository.deleteById(sponsorId);
 		}
+		tx.commit();
+		session.close();
 		//sponsorRepository.deleteById(sponsorId);
 		return "redirect:/a/sponsors/";
 	}
@@ -64,6 +74,8 @@ public class SponsorController {
 	public String sponsorAdd(@RequestParam(required = false) Integer sponsorId, @RequestParam(required = false) String firstName,
 			@RequestParam(required = false) String lastName,@RequestParam(required = false) String orgName,
 			@RequestParam(required = false) String sponsorType,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Sponsor sponsor = new Sponsor();
 		sponsor.setSponsorType(sponsorType.charAt(0));
 		sponsor.setSponsorId(sponsorId);
@@ -74,6 +86,8 @@ public class SponsorController {
 		} else {
 			individualRepository.save(new Individual(sponsor.getSponsorId(),firstName,lastName,sponsor));
 		}
+		tx.commit();
+		session.close();
 		return "redirect:/a/sponsors/";
 	}
 }

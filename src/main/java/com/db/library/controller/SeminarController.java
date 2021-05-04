@@ -1,6 +1,9 @@
 package com.db.library.controller;
 
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,9 @@ import com.db.library.repository.SponsorRepository;
 
 @Controller
 public class SeminarController {
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@Autowired
 	private SeminarRepository seminarRepository;
@@ -39,18 +45,25 @@ public class SeminarController {
 	
 	@RequestMapping(value="/seminars/addSponsor",method=RequestMethod.POST)
 	public String seminarSponsorAdd(@RequestParam Integer eventId, @RequestParam Integer sponsorId, @RequestParam Long amount,Model model) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		
 		SeminarSponsorId ssId = new SeminarSponsorId(eventId, sponsorId);
 		SeminarSponsor seminarSponsor = new SeminarSponsor(ssId,seminarRepository.getOne(eventId),sponsorRepository.getOne(sponsorId),amount);
 		seminarSponsorRepository.save(seminarSponsor);
+		tx.commit();
+		session.close();
 		return "redirect:/a/seminars/";
 	}
 	
 	@RequestMapping(value="/seminars/removesponsor",method=RequestMethod.GET)
 	public String seminarSponsorAdd(@RequestParam Integer eventId, @RequestParam Integer sponsorId,Model model) {
-		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		SeminarSponsorId ssId = new SeminarSponsorId(eventId, sponsorId);		
 		seminarSponsorRepository.deleteById(ssId);
+		tx.commit();
+		session.close();
 		return "redirect:/a/seminars/";
 	}
 }
