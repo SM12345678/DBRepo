@@ -117,7 +117,7 @@ public class RentalController {
 
 	}
 
-	@RequestMapping(value = "/rentals/rent", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/rentals/rent", method = RequestMethod.GET)
 	public String rentBookCopy(@RequestParam(value = "id", required = false) String id, Model model) {
 
 		Session session = sessionFactory.openSession();
@@ -144,7 +144,7 @@ public class RentalController {
 		return "rental_home";
 	}
 
-	@RequestMapping(value = "/rental/cust/history", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/rental/cust/history", method = RequestMethod.GET)
 	public String rentalHistory(@RequestParam(value = "id", required = false) String id, Model model) {
 
 		Session session = sessionFactory.openSession();
