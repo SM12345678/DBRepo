@@ -1,5 +1,6 @@
 package com.db.library.controller;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.db.library.model.Customer;
 import com.db.library.model.Event;
+import com.db.library.model.Registration;
 import com.db.library.model.Topic;
+import com.db.library.repository.CustomerRepository;
 import com.db.library.repository.EventRepository;
+import com.db.library.repository.RegistrationRepository;
 import com.db.library.repository.TopicRepository;
 import com.db.library.service.EventService;
 
@@ -34,6 +39,10 @@ public class EventController {
 	private EventService eventService;
 	@Autowired
 	private TopicRepository topicRepository;
+	
+	@Autowired CustomerRepository customerRepository;
+	
+	@Autowired RegistrationRepository registrationRepository;
 	
 	
 	@RequestMapping(value="/a/events",method=RequestMethod.GET)
@@ -59,6 +68,30 @@ public class EventController {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		eventService.deleteEvent(eventId);
+		tx.commit();
+		session.close();
+		List<Event> listOfEvents = eventService.getAllEvents();
+		List<Topic> listOfTopics = topicRepository.findAll();
+		model.addAttribute("listOfEvents", listOfEvents);
+		model.addAttribute("listOfTopics", listOfTopics);
+		return "redirect:/a/events/";
+	}
+	
+	@RequestMapping(value="/a/events/join",method=RequestMethod.GET)
+	public String joinEvent(@RequestParam int eventId,Model model,Principal p) {
+		
+		Customer customer = customerRepository.findByEmailAddress(p.getName());
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Event event = eventService.getEvent(eventId);
+		if(event.getExhibition()!=null ) {
+			Registration reg1 = registrationRepository.findByCustomerAndExhibition(customer, event.getExhibition());
+			if(reg1==null) {
+				Registration reg = new Registration(null, event.getExhibition(), customer);
+				registrationRepository.save(reg);
+			}
+			
+		}
 		tx.commit();
 		session.close();
 		List<Event> listOfEvents = eventService.getAllEvents();

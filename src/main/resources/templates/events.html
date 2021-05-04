@@ -28,6 +28,11 @@
 				<td>
 					<span th:text="*{event.exhibition != null}? *{event.exhibition.expenses} : '-NA-'">NA</span>
 				</td>
+				<td th:if="*{event.exhibition}" >
+				  <a class="btn btn-primary" type="button" th:href="'/a/events/join?eventId=' + ${event.eventId}" name="button">
+					Join
+				  </a>
+				</td>
 				<td sec:authorize="hasAuthority('ADMIN')">
 				  <a class="btn btn-primary" type="button" th:href="'/events/edit?eventId=' + ${event.eventId}" name="button">
 					Edit
