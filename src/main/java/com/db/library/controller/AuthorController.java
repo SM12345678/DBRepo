@@ -38,7 +38,7 @@ public class AuthorController {
 		
 	}
 	
-	@RequestMapping(value="/authors",method=RequestMethod.POST)
+	@RequestMapping(value="/a/authors",method=RequestMethod.POST)
 	public String authorsAdd(@RequestParam(required = false) Integer authorId,@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, 
 			@RequestParam String email, @RequestParam String city, @RequestParam String state,
 			@RequestParam(required = false) String zipCode, @RequestParam(required = false) String stAddress,  Model model) {	
@@ -53,7 +53,7 @@ public class AuthorController {
 		
 	}
 	
-	@RequestMapping(value="/authors/edit",method=RequestMethod.GET)
+	@RequestMapping(value="/a/authors/edit",method=RequestMethod.GET)
 	public String editAuthorList(@RequestParam int id, Model model) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -63,7 +63,7 @@ public class AuthorController {
 		return "author_edit";
 	}
 	
-	@RequestMapping(value="/authors/delete",method=RequestMethod.GET)
+	@RequestMapping(value="/a/authors/delete",method=RequestMethod.GET)
 	public String deleteAuthor(@RequestParam int id, Model model) {	
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();

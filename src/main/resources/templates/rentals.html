@@ -19,14 +19,14 @@
 			<td th:text="${book.bookName}"></td>
 			<td th:text="${book.topic.topicName}"></td>
 			 <td th:text="${book.authorsString}"></td>
-			  <td><a th:href=@{/books/edit(id=${book.id})}>Edit Book</a>
-			   <td><a th:href=@{/books/delete(id=${book.id})}>Delete Book</a>
-			    <td><a th:href=@{/books/copies(id=${book.id})}>View Book Copies</a>
+			  <td><a th:href=@{http://localhost:8080/books/edit(id=${book.id})}>Edit Book</a>
+			   <td><a th:href=@{http://localhost:8080/books/delete(id=${book.id})}>Delete Book</a>
+			    <td><a th:href=@{http://localhost:8080/books/copies(id=${book.id})}>View Book Copies</a>
 		</tr>
 	</table>
 	<hr />
 	
-<Div><a th:href="@{/books/add}">Add New Book</a></Div> 
+<Div><a th:href="@{http://localhost:8080/books/add}">Add New Book</a></Div> 
 </div>
 	<span th:insert="index::footer">
 	</span>

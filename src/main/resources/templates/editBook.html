@@ -9,7 +9,7 @@
 	<h1>Edit Book</h1>
 	<hr />
 	
-<form  th:action="@{/books/edit}" method="post" th:object="${book}" class="form-group" id="#form">		
+<form  th:action="@{http://localhost:8080/a/books/edit}" method="post" th:object="${book}" class="form-group" id="#form">		
 	 <div>
 			Book Name: <input th:field="*{bookName}" /> 
 			</div>
@@ -20,7 +20,7 @@
 			 <option th:value="0">nothing selected</option>
             <option th:each="p : ${topics}" th:value="${p.topicId}" th:text="${p.topicName}"  />
            </select>
-         <a th:href="@{/a/topics}">Go to add topic to include new topic in the list</a>
+         <a th:href="@{http://localhost:8080/a/topics}">Go to add topic to include new topic in the list</a>
          </Div> 
 			
 			<div>
@@ -30,7 +30,7 @@
 			 <option value="">nothing selected</option>
             <option th:each="p : ${authors}" th:value="${p.authorId}" th:text="${p.fullName}" th:selected="${book.authorids.contains(p.authorId)}" />
             </select>
-        <a th:href="@{/a/authors}">Go to add author to include new author in the list</a></Div> 
+        <a th:href="@{http://localhost:8080/a/authors}">Go to add author to include new author in the list</a></Div> 
 		
 		
 		 <input th:field="*{id}" style="display:none"/>

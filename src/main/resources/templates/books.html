@@ -21,14 +21,14 @@
 				<td th:text="${book.bookName}"></td>
 				<td th:text="${book.topic.topicName}"></td>
 				<td th:text="${book.authorsString}"></td>
-				<td><a class="btn btn-primary" th:href=@{/books/edit(id=${book.id})}>Edit </a>
-				<td><a class="btn btn-danger" th:href=@{/books/delete(id=${book.id})}>Delete</a>
-				<td><a class="btn btn-primary" th:href=@{/a/books/copies(id=${book.id})}>Copies</a>
+				<td><a class="btn btn-primary" th:href=@{http://localhost:8080/a/books/edit(id=${book.id})}>Edit </a>
+				<td><a class="btn btn-danger" th:href=@{http://localhost:8080/a/books/delete(id=${book.id})}>Delete</a>
+				<td><a class="btn btn-primary" th:href=@{http://localhost:8080/a/books/copies(id=${book.id})}>Copies</a>
 			</tr>
 		</table>
 		<hr />
 
-		<Div><a th:href="@{/books/add}">Add New Book</a></Div>
+		<Div><a th:href="@{http://localhost:8080/a/books/add}">Add New Book</a></Div>
 	</div>
 	<span th:insert="index::footer">
 	</span>

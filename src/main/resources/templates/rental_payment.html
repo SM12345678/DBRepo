@@ -50,19 +50,15 @@
 
 		</tr>
 		<tr>
-			<td th:field="*{invoiceid}" id="*{invoiceid}" >  <span th:field="*{invoiceid}" th:text="*{invoiceid}"></span></td>
-			<td id="cardholdername" ><span th:field="*{cardholdername}" th:text="*{cardholdername}"></span></td>
-			<td id="paymentamount"></td>
+			<td th:field="*{invoiceid}" id="*{invoiceid}" >  <span th:field="*{invoiceid}" th:value="*{invoiceid}" th:text="*{invoiceid}"></span></td>
+			<td id="cardholdername" ><input id="name" name="*{cardholdername}" /></td>
 			 <td>
-			  <div>
-			  <!-- <th:select path="topicId" items="${topics}" /> -->
-		<select id="paymentmethod" th:field="*{paymentmethod}">
+		<select id="paymentmethod" th:value="*{paymentmethod}"  th:field="*{paymentmethod}">
 			 <option th:value="0">nothing selected</option>
             <option th:each="p : ${paymentmethodList}" th:value="${p}"  th:text="${p}" />
            </select>
- 
-         </Div> 
 			 </td>
+			 <td id="paymentamount"></td>
 		</tr>
 	</table>
 

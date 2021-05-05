@@ -21,11 +21,11 @@
 			<td th:text="${book.topic.topicName}"></td>
 			 <td th:text="${book.authorsString}"></td>
 			
-			 <td><a th:href=@{/books/edit(id=${book.id})}>Edit Book</a>
+			 <td><a th:href=@{http://localhost:8080/a/books/edit(id=${book.id})}>Edit Book</a>
 			<!--   <a th:href=@{/books/edit?id=${book.id}}>Edit Book</a> -->
 			  </td>
 		</tr>
-		<tr><td><a th:href="@{/books}">Go to book list</a></td></tr> 
+		<tr><td><a th:href="@{http://localhost:8080/a/books}">Go to book list</a></td></tr> 
 	</table>
 
 

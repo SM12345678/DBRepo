@@ -67,7 +67,7 @@ public class BookController {
 
 	}
 
-	@RequestMapping(value = "/books/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books/add", method = RequestMethod.GET)
 	public ModelAndView addBook(Model model) {
 
 		Book bookObj = new Book();
@@ -89,7 +89,7 @@ public class BookController {
 
 	}
 
-	@PostMapping("/books/add")
+	@PostMapping("/a/books/add")
 	public ModelAndView SaveBook(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes,
 			@ModelAttribute("id") String id, Model model) {
 
@@ -130,7 +130,7 @@ public class BookController {
 		return "viewBook";
 	}
 
-	@RequestMapping(value = "/books/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books/edit", method = RequestMethod.GET)
 	public String editBook(@RequestParam(value = "id", required = false) String id, Model model) {
 
 		Session session = sessionFactory.openSession();
@@ -153,7 +153,7 @@ public class BookController {
 		return "editBook";
 	}
 
-	@PostMapping("/books/edit")
+	@PostMapping("/a/books/edit")
 	public ModelAndView updateBook(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes,
 			@ModelAttribute("id") String id, Model model) {
 
@@ -180,7 +180,7 @@ public class BookController {
 
 	}
 
-	@RequestMapping(value = "/books/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books/delete", method = RequestMethod.GET)
 	public ModelAndView deleteBook(@RequestParam(value = "id", required = false) String id, Model model) {
 
 		Session session = sessionFactory.openSession();
@@ -196,7 +196,7 @@ public class BookController {
 
 	}
 
-	@RequestMapping(value = "/books/save", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/a/books/save", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody Book SaveBook(@RequestBody Book book) {
 
 		Session session = sessionFactory.openSession();
@@ -250,7 +250,7 @@ public class BookController {
 	}
 	
 	
-	@RequestMapping(value = "/books/copy/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books/copy/delete", method = RequestMethod.GET)
 	public String deleteBookCopy(@RequestParam(value = "id", required = false) String id, Model model,RedirectAttributes redirectAttributes) {
 
 		Session session = sessionFactory.openSession();
@@ -286,7 +286,7 @@ public class BookController {
 	}
 	
 	
-	@RequestMapping(value = "/books/copy/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/a/books/copy/add", method = RequestMethod.GET)
 	public String addBookCopy(@RequestParam(value = "id", required = false) String id, Model model,RedirectAttributes redirectAttributes) {
 
 		Session session = sessionFactory.openSession();

@@ -19,39 +19,19 @@
 			<tr th:each="copy : ${bookCopyList}">
 				<td th:text="${copy.copyid}"></td>
 				<td th:text="${copy.status}"></td>
-				<td><a th:href=@{/books/copy/delete(id=${copy.copyid})}>Delete Copy</a> </td>
 			</tr>
 		</table>
 		<hr />
 
 		<Div>
-			<a th:href="@{/books/copy/add(id=${book.id})}">Add New Copy</a></Div>
+			<a th:href="@{http://localhost:8080/a/books/copy/add(id=${book.id})}">Add New Copy</a></Div>
 
-		<Div><a th:href="@{/a/books}">Go to book list</a></Div>
+		<Div><a th:href="@{http://localhost:8080/a/books}">Go to book list</a></Div>
 	</div>
 	<span th:insert="index::footer">
 	</span>
 
-	<h1>Book Name :  <label th:text="${book.bookName}"> </label></h1>
-	<table>
-		<tr>
-			<th>Copy Id</th>
-			<th>Status</th>
 
-
-		</tr>
-		<tr th:each="copy : ${bookCopyList}">
-			<td th:text="${copy.copyid}"></td>
-			<td th:text="${copy.status}"></td>
-			<td><a th:href=@{c/books/copy/delete(id=${copy.copyid})}>Delete Copy</a>	</td>		
-		</tr>
-	</table>
-	<hr />
-
-<Div>
-<a th:href="@{/c/books/copy/add(id=${book.id})}">Add New Copy</a></Div> 
-
-	<Div><a th:href="@{/books}">Go to book list</a></Div>
 </body>
 
 </html>

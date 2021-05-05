@@ -24,13 +24,14 @@
 				<td th:text="${book.authorsString}"></td>
 				<td th:text="${book.BookStatus}"></td>
 
-				<td th:if="${book.makerentable}"> <a class="btn btn-primary" th:href=@{/a/rentals/rent(id=${book.availableCopyId})}>Rent</a>
+				<td th:if="${book.makerentable}"> <a class="btn btn-primary" th:href=@{http://localhost:8080/a/rentals/rent(id=${book.availableCopyId})}>Rent</a>
 				</td>
 
 			</tr>
 		</table>
 		<hr />
-		<Div><a th:href="@{/a/rental/cust/history}">Go to Rental History</a></Div>
+		
+		<Div><a th:href="@{http://localhost:8080/a/rental/cust/history}">Go to Rental History</a></Div>
 	</div>
 	<span th:insert="index::footer">
 	</span>
