@@ -46,6 +46,7 @@ import com.db.library.repository.BookCopyRepository;
 import com.db.library.repository.BookRepository;
 import com.db.library.repository.CustomerRepository;
 import com.db.library.repository.InvoiceRepository;
+import com.db.library.repository.PaymentRepository;
 import com.db.library.repository.RentalRepository;
 import com.db.library.repository.TopicRepository;
 
