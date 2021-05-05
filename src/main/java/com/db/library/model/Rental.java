@@ -29,7 +29,7 @@ public class Rental {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="rental_id")
-	private int rentalid;
+	public int rentalid;
 	
 	@Column(name="cus_id")
 	private Long cusid;

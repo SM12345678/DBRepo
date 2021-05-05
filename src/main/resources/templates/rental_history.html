@@ -21,15 +21,15 @@
 		</tr>
 		<tr th:each="rental : ${rentals}">
 		     <td th:text="${rental.StatusText}"></td>
-		     <td th:text="${rental.rentalid}"></td>
+		     <td th:text="${rental.rid}"></td>
 			 <td th:text="${rental.bookName}"></td>
 			 <td th:text="${rental.authorsString}"></td>
 			 <td th:text="${rental.topicName}"></td>
-			 <td th:text="${rental.bokcopyid}"></td>
+			 <td th:text="${rental.copyid}"></td>
 			 <td th:text="${rental.borrowdate}"></td>
 			 <td th:text="${rental.expectedreturndate}"></td>
 			 <td th:text="${rental.actualreturndate}"></td>
-			 <td th:if="${book.isamountPending}"> <a th:href=@{/rentals/payment(id=${rental.rid})} >Return Book</a></td>
+			 <td th:if="${rental.isamountPending}"> <a th:href=@{/rentals/payment(id=${rental.rid})} >Return Book</a></td>
 		</tr>
 	</table>
 	<hr />

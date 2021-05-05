@@ -1,0 +1,80 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>RTL Library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], select {
+        display: inline-block;
+        width: 200px;
+    }
+    input[type=radio] {
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        margin-right: 190px;
+    }  
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+ <link href="/core/css/bootstrap.min.css" rel="stylesheet">
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+	
+	
+	
+
+</head>
+<body>
+	<h1>Rental Payment</h1>
+	<hr />
+	
+<form  th:action="@{/a/rentals/payment}" method="post" th:object="${payment}" class="form-group" id="#form">	
+<!--  <form   method="post" th:object="${book}" class="form-group" id="#form"> -->
+
+<table>
+		<tr>
+			<th>Invoice Id</th>
+			<th>Card Holder Name</th>
+			<th>Payment Method</th>
+			<th>Payment Amount</th>
+
+		</tr>
+		<tr>
+			<td th:field="*{invoiceid}" id="*{invoiceid}" >  <span th:field="*{invoiceid}" th:text="*{invoiceid}"></span></td>
+			<td id="cardholdername" ><span th:field="*{cardholdername}" th:text="*{cardholdername}"></span></td>
+			<td id="paymentamount"></td>
+			 <td>
+			  <div>
+			  <!-- <th:select path="topicId" items="${topics}" /> -->
+		<select id="paymentmethod" th:field="*{paymentmethod}">
+			 <option th:value="0">nothing selected</option>
+            <option th:each="p : ${paymentmethodList}" th:value="${p}"  th:text="${p}" />
+           </select>
+ 
+         </Div> 
+			 </td>
+		</tr>
+	</table>
+
+		
+			<input type="submit" id="submit" value="Make Payment"/>
+		</div>
+		
+	
+	</form>
+
+	
+
+
+</body>
+</html>
