@@ -29,7 +29,7 @@ public class Invoice {
 	
 
 	@Column(name="invoice_amount")
-	private Integer invoiceamount;
+	private Double invoiceamount;
 	
 	@Column(name="rental_id")
 	private int rentalid;
@@ -50,11 +50,11 @@ public class Invoice {
 		this.invoicedate = invoicedate;
 	}
 
-	public Integer getInvoiceamount() {
+	public Double getInvoiceamount() {
 		return invoiceamount;
 	}
 
-	public void setInvoiceamount(Integer invoiceamount) {
+	public void setInvoiceamount(Double invoiceamount) {
 		this.invoiceamount = invoiceamount;
 	}
 

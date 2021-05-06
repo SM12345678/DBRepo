@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+<title>RTL Library</title>	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+
+	<div class="container">
+		<h3>Rooms</h3>
+		<table class="table">
+			<tr>
+				<th>Room Number</th>
+				<th>Room Capacity</th>
+				<th>Available Slots</th>
+			</tr>
+			<tr th:each="room : ${listOfRooms}">
+				<td th:text="${room.roomId}"></td>
+				<td th:text="${room.roomCapacity}"></td>
+			<!-- 	<td>
+				<select id="bookingslot" th:field="*{bookingSlot}" multiple="true">
+					<option value="">nothing selected</option>
+					<option th:each="p : ${room.availableslots}" th:value="${p}" th:text="${p}" />
+				</select>
+				<a th:href="@{'http://localhost:8080/a/room/reservation?roomId='+ ${room.roomId}+'&roomCapacity=+${room.roomCapacity}">Reserve Room</a>
+				</td>
+	 -->
+			</tr>
+		</table>
+	</div>
+	<hr/>
+	
+	<div class="container" sec:authorize="hasAuthority('ADMIN')" >
+		<form th:action="@{/a/bookRoom}" method="post" enctype="multipart/form-data">
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="rcapacity" class="form-label">Room Capacity</label>
+				  <input class="form-control" id="rcapacity"  name="rcapacity" placeholder="room capacity">
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Add Room" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+	
+	
+</body>
+</html>
+

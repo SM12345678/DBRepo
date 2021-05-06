@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.sql.DataSource;
 
@@ -19,6 +20,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -52,8 +55,6 @@ import com.db.library.repository.TopicRepository;
 
 @Controller
 public class RentalController {
-
-	
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -176,7 +177,7 @@ public class RentalController {
 		
 		
 		
-	
+	     
 		 session = sessionFactory.openSession();
 		 tx = session.beginTransaction(); // id=String.valueOf(model.getAttribute("id"));
 
@@ -192,7 +193,7 @@ public class RentalController {
 			r.topicName = bookRepository.getOne(r.bookid).getTopic().getTopicName();
 			r.copyid = Integer.parseInt(String.valueOf(t.get(3)));
 			r.status = Integer.parseInt(String.valueOf(t.get(4)));
-			Rental rental=rentalRepository.getOne(r.rid);
+			Rental rental=rentalRepository.findById(r.rid).get();
 			r.actualreturndate=(rental.getActualreturndate()!=null)?rental.getActualreturndate().toString():"";
 			r.borrowdate=rental.getBorrowdate().toString();
 			r.expectedreturndate=rental.getExpectedreturndate().toString();
@@ -245,7 +246,7 @@ public class RentalController {
 			r.topicName = bookRepository.getOne(r.bookid).getTopic().getTopicName();
 			r.copyid = Integer.parseInt(String.valueOf(t.get(3)));
 			r.status = Integer.parseInt(String.valueOf(t.get(4)));
-			Rental rental=rentalRepository.getOne(r.rid);
+			Rental rental=rentalRepository.findById(r.rid).get();
 			r.actualreturndate=(rental.getActualreturndate()!=null)?rental.getActualreturndate().toString():"";
 			r.borrowdate=rental.getBorrowdate().toString();
 			r.expectedreturndate=rental.getExpectedreturndate().toString();
@@ -279,28 +280,40 @@ public class RentalController {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		// id=String.valueOf(model.getAttribute("id"));
-		Rental r=rentalRepository.getOne(Integer.parseInt(id));
+		Rental r=rentalRepository.findById(Integer.parseInt(id)).get();
 		r.setActualreturndate(new Date(System.currentTimeMillis()));
 		Rental rental = rentalRepository.save(r);
+		Invoice in=new Invoice();
+		 
+		 if(rental.getActualreturndate().compareTo(new Date(System.currentTimeMillis()))>0 ||rental.getActualreturndate().compareTo(new Date(System.currentTimeMillis()))<0)
+		 {
+			 
+			 long ddifference_In_Days =((rental.getBorrowdate().getTime()- new Date(System.currentTimeMillis()).getTime())/ (1000 * 60 * 60 * 24))% 365;
+             in.setInvoiceamount(ddifference_In_Days*0.2);
+		 }
+		 else {
+			 
+			 long ddifference_In_Days = ((rental.getActualreturndate().getTime()- new Date(System.currentTimeMillis()).getTime())/ (1000 * 60 * 60 * 24))% 365;
+			 
+			 long ddifference_In_Days1 =((rental.getBorrowdate().getTime()- rental.getActualreturndate().getTime())/ (1000 * 60 * 60 * 24))% 365;
+
+             in.setInvoiceamount(ddifference_In_Days*0.2+ddifference_In_Days1*0.4);
+		 }
+		 in.setRentalid(r.rentalid);
+		 in.setInvoicedate(new Date(System.currentTimeMillis()));
+		 Invoice invoice= invoiceRepository.save(in);
+		 
+	tx.commit();
+	session.close();
+
 	
-		tx.commit();
-		session.close();
-		
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction();
-		Invoice invoice = invoiceRepository.findByRentalid(Integer.parseInt(id)).get(0);
-		tx.commit();
-		session.close();
-		
-		
-	
-		
-		
+			
         Payment payment=new Payment();
         
         payment.setPaymentmethodList(Arrays.asList("cash","credit","debit","paypal"));
         payment.setInvoiceid(invoice.getInvoiceid());
         payment.setPaymentamount(invoice.getInvoiceamount());
+        payment.setRentalid(Integer.parseInt(id));
 
 		model.addAttribute("rental", rental);
 		model.addAttribute("invoice", invoice);
@@ -308,6 +321,8 @@ public class RentalController {
 		
 		return "rental_payment";
 	}
+
+	
 	
 	@RequestMapping(value = "/a/rentals/payment", method = RequestMethod.POST)
 	public String MakePayment(@RequestParam(value = "id", required = false) String id, Model model,@ModelAttribute("payment") Payment payment,Principal p) {
@@ -337,7 +352,7 @@ public class RentalController {
 			r.topicName = bookRepository.getOne(r.bookid).getTopic().getTopicName();
 			r.copyid = Integer.parseInt(String.valueOf(t.get(3)));
 			r.status = Integer.parseInt(String.valueOf(t.get(4)));
-			Rental rental=rentalRepository.getOne(r.rid);
+			Rental rental=rentalRepository.findById(r.rid).get();  
 			r.actualreturndate=(rental.getActualreturndate()!=null)?rental.getActualreturndate().toString():"";
 			r.borrowdate=rental.getBorrowdate().toString();
 			r.expectedreturndate=rental.getExpectedreturndate().toString();
@@ -345,6 +360,18 @@ public class RentalController {
 				r.isamountPending = true;
 			}
 			rentals.add(r);
+			if(r.status==0)
+				r.StatusText="Returned";
+				
+				if(r.status==1)
+					r.StatusText="Over Due";
+				
+				if(r.status==2)
+					r.StatusText="Not Over Due";
+					
+				if (r.status != 0) {
+					r.isamountPending = true;
+				}
 		}
 
 		tx.commit();

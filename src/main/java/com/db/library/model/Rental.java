@@ -3,6 +3,7 @@ package com.db.library.model;
 import java.sql.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,9 +17,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.eclipse.persistence.annotations.ReturnInsert;
+import org.hibernate.envers.Audited;
+
 
 @Entity
+@Audited
 @Table(name = "SM_Rental")
+
 public class Rental {
 	
 	public Rental() {
@@ -50,11 +56,12 @@ public class Rental {
 	@Column(name="actual_return_date")
 	@Basic
 	@Temporal(TemporalType.TIMESTAMP)
+	@ReturnInsert
 	private java.util.Date actualreturndate;
 	
 
 	
-		
+    
 	public Integer getRentalid() {
 		return rentalid;
 	}

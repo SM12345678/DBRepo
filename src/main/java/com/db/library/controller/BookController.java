@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,10 +29,13 @@ import com.db.library.repository.AuthorRepository;
 import com.db.library.repository.BookCopyRepository;
 import com.db.library.repository.BookRepository;
 import com.db.library.repository.TopicRepository;
+import com.db.library.service.CachingService;
 
 @Controller
 public class BookController {
 
+	 @Autowired
+	    CachingService  cachingService;
 	@Autowired
 	private SessionFactory sessionFactory;
 	@Autowired
@@ -49,14 +54,18 @@ public class BookController {
 	@RequestMapping(value = "/a/books", method = RequestMethod.GET)
 	public String booksList(Model model) {
 		
+		
+		
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		List<Book> bookList = bookRepository.findByDeleted(0);
+	//	List<Book> bookList = bookRepository.findByDeleted(0);
+		List<Book> bookList =	cachingService.findByDeleted(1);
 		List<Topic> topicList = topicRepository.findAll();
 		List<Author> authorList = authorRepository.findAll();
 		bookList.forEach(f -> f.setAuthorsString());
 		tx.commit();
         session.close();
+        
         
         
 		model.addAttribute("books", bookList);
@@ -90,9 +99,10 @@ public class BookController {
 	}
 
 	@PostMapping("/a/books/add")
+	  @CacheEvict("Books")
 	public ModelAndView SaveBook(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes,
 			@ModelAttribute("id") String id, Model model) {
-
+cachingService.evictAllCacheValues();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		List<Author> authorList = authorRepository.findAllById(book.authorids);
@@ -191,7 +201,7 @@ public class BookController {
 		bookRepository.save(bookObj);
 		tx.commit();
         session.close();
-        
+        cachingService.evictAllCacheValues();
 		return new ModelAndView("redirect:/a/books/");
 
 	}

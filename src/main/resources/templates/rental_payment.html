@@ -38,7 +38,7 @@
 	<h1>Rental Payment</h1>
 	<hr />
 	
-<form  th:action="@{/a/rentals/payment}" method="post" th:object="${payment}" class="form-group" id="#form">	
+<form  th:action="@{http://localhost:8080/a/rentals/payment}" method="post" th:object="${payment}" class="form-group" id="#form">	
 <!--  <form   method="post" th:object="${book}" class="form-group" id="#form"> -->
 
 <table>
@@ -51,20 +51,22 @@
 		</tr>
 		<tr>
 			<td th:field="*{invoiceid}" id="*{invoiceid}" >  <span th:field="*{invoiceid}" th:value="*{invoiceid}" th:text="*{invoiceid}"></span></td>
-			<td id="cardholdername" ><input id="name" name="*{cardholdername}" /></td>
+			<td id="cardholdername" ><input id="name" name="*{cardholdername}" th:field="*{cardholdername}" /></td>
 			 <td>
 		<select id="paymentmethod" th:value="*{paymentmethod}"  th:field="*{paymentmethod}">
 			 <option th:value="0">nothing selected</option>
-            <option th:each="p : ${paymentmethodList}" th:value="${p}"  th:text="${p}" />
+            <option th:each="p : *{paymentmethodList}" th:value="${p}"  th:text="${p}" />
            </select>
 			 </td>
-			 <td id="paymentamount"></td>
+			 <td id="paymentamount"> <input type="hidden" th:field="*{paymentamount}" th:value="*{paymentamount}" th:attr="field='*{paymentamount}'"/>
+			 <span th:field="*{paymentamount}" th:value="*{paymentamount}" th:text="*{paymentamount}"></span></td>
+			
 		</tr>
 	</table>
-
-		
+<input type="hidden" th:field="*{invoiceid}" th:value="*{invoiceid}" th:attr="field='*{invoiceid}'"/>
+		<input type="hidden" th:field="*{rentalid}" th:value="*{rentalid}" th:attr="field='*{rentalid}'"/>
 			<input type="submit" id="submit" value="Make Payment"/>
-		</div>
+	
 		
 	
 	</form>

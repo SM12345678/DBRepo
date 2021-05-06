@@ -36,11 +36,24 @@ public class Payment {
 	private String cardholdername;
 	
 	@Column(name="payment_amount")
-	private Integer paymentamount;
+	private Double paymentamount;
 	
 	@Column(name="payment_method")
 	private String paymentmethod;
 	
+
+	@Column(name="rental_id")
+	private Integer rentalid;
+	
+	
+	public Integer getRentalid() {
+		return rentalid;
+	}
+
+	public void setRentalid(Integer rentalid) {
+		this.rentalid = rentalid;
+	}
+
 	@Transient
 	public List<String> paymentmethodList;
 	
@@ -87,11 +100,14 @@ public class Payment {
 		this.cardholdername = cardholdername;
 	}
 
-	public Integer getPaymentamount() {
+	public Double getPaymentamount() {
 		return paymentamount;
 	}
 
-	public void setPaymentamount(Integer paymentamount) {
+	public void setPaymentamount(Double paymentamount) {
+		if(paymentamount==0)
+		{paymentamount=0.2;}
+		
 		this.paymentamount = paymentamount;
 	}
 
