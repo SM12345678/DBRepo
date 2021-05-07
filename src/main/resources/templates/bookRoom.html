@@ -12,11 +12,32 @@
 			<tr>
 				<th>Room Number</th>
 				<th>Room Capacity</th>
-				<th>Available Slots</th>
+				<th>Booking Date</th>
+				<th>Booking Slots</th>
 			</tr>
 			<tr th:each="room : ${listOfRooms}">
 				<td th:text="${room.roomId}"></td>
 				<td th:text="${room.roomCapacity}"></td>
+				<td>
+							  
+				  <input class="form-control" id="eventStartDatetime"  name="eventStartDatetime">
+		
+				</td>
+				<td>
+
+				<select id="bookingslot" multiple="true">
+				<option value="3" selected="selected">nothing selected</option>
+					<option value="">8 AM to 10 PM</option>
+			        <option value="1">11 AM to 13 PM</option>
+			        <option value="2">13 PM to 15 PM</option>
+			          <option value="2">16 PM to 18 PM</option>
+			        
+				</select>
+		
+				</td>
+				<td>
+				<input class="btn btn-primary" type="submit" value="Reserve Room" name="button"/>
+					</td>
 			<!-- 	<td>
 				<select id="bookingslot" th:field="*{bookingSlot}" multiple="true">
 					<option value="">nothing selected</option>
@@ -46,7 +67,24 @@
 	</div>
 	<span th:insert="index::footer">
 	</span>
-	
+	<script>
+	    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+	        icons: {
+	            time: 'far fa-clock',
+	            date: 'far fa-calendar',
+	            up: 'fas fa-arrow-up',
+	            down: 'fas fa-arrow-down',
+	            previous: 'fas fa-chevron-left',
+	            next: 'fas fa-chevron-right',
+	            today: 'far fa-calendar-check-o',
+	            clear: 'far fa-trash',
+	            close: 'far fa-times'
+	        } });
+		
+	    
+
+	    
+	</script>
 	
 </body>
 </html>

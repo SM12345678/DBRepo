@@ -526,5 +526,13 @@ ALTER TABLE sm_events
 update sm_events set topic_id = topic_id  where event_id>0;
 
 
+CREATE TABLE `sm_book_name_hist` (
+  `book_id` int NOT NULL,
+  `change_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `oldname` varchar(50) NOT NULL,
+  `newname` varchar(50) NOT NULL,
+  PRIMARY KEY (`book_id`,`change_date`),
+  CONSTRAINT `sm_book_name_hist_sm_book_fk` FOREIGN KEY (`book_id`) REFERENCES `sm_book` (`book_id`)
+);
 
 

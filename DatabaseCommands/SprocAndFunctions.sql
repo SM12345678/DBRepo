@@ -49,3 +49,13 @@ set copyid = (
     );
 RETURN copyid;
 END $$ DELIMITER;
+
+
+DELIMITER $$
+CREATE PROCEDURE `SM_PROC_BookName_CHANGE`(IN bookidparam int, IN newnameparam varchar(50))
+BEGIN
+DECLARE  oldnameparam  varchar(50);
+select book_name into oldnameparam from sm_book where book_id=bookidparam;
+INSERT INTO sm_book_name_hist (book_id,oldname,newname) VALUES(bookidparam,oldnameparam,newnameparam);
+END$$
+DELIMITER ;

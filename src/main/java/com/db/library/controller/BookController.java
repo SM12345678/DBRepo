@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.Tuple;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -58,8 +60,7 @@ public class BookController {
 		
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-	//	List<Book> bookList = bookRepository.findByDeleted(0);
-		List<Book> bookList =	cachingService.findByDeleted(1);
+		List<Book> bookList =	cachingService.findByDeleted(0);
 		List<Topic> topicList = topicRepository.findAll();
 		List<Author> authorList = authorRepository.findAll();
 		bookList.forEach(f -> f.setAuthorsString());
@@ -99,10 +100,12 @@ public class BookController {
 	}
 
 	@PostMapping("/a/books/add")
-	  @CacheEvict("Books")
-	public ModelAndView SaveBook(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes,
-			@ModelAttribute("id") String id, Model model) {
-cachingService.evictAllCacheValues();
+	public ModelAndView SaveBook(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes,@ModelAttribute("id") String id, Model model) {
+		
+		//clearing cache
+        cachingService.evictAllCacheValues();
+        
+        
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		List<Author> authorList = authorRepository.findAllById(book.authorids);
@@ -166,16 +169,25 @@ cachingService.evictAllCacheValues();
 	@PostMapping("/a/books/edit")
 	public ModelAndView updateBook(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes,
 			@ModelAttribute("id") String id, Model model) {
-
+		cachingService.evictAllCacheValues();
 		book.setTopic(topicRepository.findById(book.topicid).orElse(null));
 
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		bookRepository.updateBookNameHistory(book.getId(),book.getBookName());
+		tx.commit();
+        session.close();
+		
+		
 		try (Session sessionnew = sessionFactory.openSession()) {
 			sessionnew.beginTransaction();
 			if (book.authorids != null) {
 				List<Author> authorList = authorRepository.findAllById(book.authorids);
+				
 				Set<Author> authorSet = authorList.stream().collect(Collectors.toSet());
 				book.setAuthors(authorSet);
 			}
+			
 			sessionnew.saveOrUpdate(book);
 			sessionnew.getTransaction().commit();
 		}

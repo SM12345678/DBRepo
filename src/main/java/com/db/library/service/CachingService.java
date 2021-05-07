@@ -32,14 +32,14 @@ public class CachingService {
     @CacheEvict(value = "Books", allEntries = true)
     public void evictAllCacheValues() {}
     
-    @CacheEvict(value = "first", key = "#cacheKey")
+    @CacheEvict(value = "Books", key = "#cacheKey")
     public void evictSingleCacheValue(String cacheKey) {}
     
     
     @Cacheable("Books")
 	public List<Book> findByDeleted(int deleted)
 	{
-    	System.out.println("From database");
+     System.out.println("From database");
      return	bookRepository.findByDeleted(0);
 	}
 }
