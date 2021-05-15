@@ -19,7 +19,7 @@
 			<tr th:each="copy : ${bookCopyList}">
 				<td th:text="${copy.copyid}"></td>
 				<td th:text="${copy.status}"></td>
-				<td><a th:href=@{c/books/copy/delete(id=${copy.copyid})}>Delete Copy</a>	</td>
+				<td><a th:href=@{http://localhost:8080/a/books/copy/delete(id=${copy.copyid})}>Delete Copy</a>	</td>
 			</tr>
 		</table>
 		<hr />

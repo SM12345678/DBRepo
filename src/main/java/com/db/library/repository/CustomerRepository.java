@@ -8,4 +8,7 @@ import com.db.library.model.Customer;
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 	@Query("SELECT u FROM Customer u WHERE u.emailAddress = ?1")
     public Customer findByEmailAddress(String username);
+
+	@Query("SELECT u FROM Customer u WHERE u.ResetPasswordToken = ?1")
+	public Customer getByResetPasswordToken(String token);
 }

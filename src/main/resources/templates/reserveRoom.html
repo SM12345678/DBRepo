@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="index :: header"> 
+<title>RTL Library</title>	
+</head>
+<body>
+<nav th:insert="index :: nav-header"> </nav>
+<div class="alert alert-primary" role="alert" th:if="${SuccessMessage}">
+ 			 Reservation done!
+		</div>
+		<div class="alert alert-primary" role="alert" th:if="${errorMessage}">
+ 			 Reservation could not be done! Selected slot could be full, choose another slot.
+		</div>
+	<div class="container">
+		<h3>Rooms</h3>
+		<table class="table">
+			<tr>
+				<th>Room Number</th>
+				<th>Room Capacity</th>
+				<th>Booking Date(yyyy/mm/dd)</th>
+				<th>Booking Slots</th>
+			</tr>
+			<tr th:each="room : ${listOfRooms}">
+				<td th:text="${room.roomId}"></td>
+				<td th:text="${room.roomCapacity}"></td>
+				<td>
+							  
+				  <input class="form-control" id="eventStartDatetime"  name="eventStartDatetime">
+		
+				</td>
+				<td>
+
+				<select id="bookingslot" multiple="true">
+				<option value="0" selected="selected">nothing selected</option>
+					<option value="1">8 AM to 10 PM</option>
+			        <option value="2">11 AM to 13 PM</option>
+			        <option value="3">13 PM to 15 PM</option>
+			          <option value="4">16 PM to 18 PM</option>
+			        
+				</select>
+		
+				</td>
+				<td>
+				  <a class="btn btn-primary" type="button" th:href="'/a/events/bookRoom?roomId=' + ${room.roomId}" name="button">
+					Join
+				  </a>
+				<input class="btn btn-primary" type="submit" value="Reserve Room" name="button"/>
+					</td>
+			<!-- 	<td>
+				<select id="bookingslot" th:field="*{bookingSlot}" multiple="true">
+					<option value="">nothing selected</option>
+					<option th:each="p : ${room.availableslots}" th:value="${p}" th:text="${p}" />
+				</select>
+				<a th:href="@{'http://localhost:8080/a/room/reservation?roomId='+ ${room.roomId}+'&roomCapacity=+${room.roomCapacity}">Reserve Room</a>
+				</td>
+	 -->
+			</tr>
+		</table>
+	</div>
+	<hr/>
+	
+	<div class="container" sec:authorize="hasAuthority('ADMIN')" >
+		<form th:action="@{/a/bookRoom}" method="post" enctype="multipart/form-data">
+			<div class="row">
+				<div class="col-md-6">
+				  <label for="rcapacity" class="form-label">Room Capacity</label>
+				  <input class="form-control" id="rcapacity"  name="rcapacity" placeholder="room capacity">
+				</div>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Add Room" name="button"/>
+			</div>
+		</form>
+	</div>
+	<span th:insert="index::footer">
+	</span>
+	<script>
+	    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+	        icons: {
+	            time: 'far fa-clock',
+	            date: 'far fa-calendar',
+	            up: 'fas fa-arrow-up',
+	            down: 'fas fa-arrow-down',
+	            previous: 'fas fa-chevron-left',
+	            next: 'fas fa-chevron-right',
+	            today: 'far fa-calendar-check-o',
+	            clear: 'far fa-trash',
+	            close: 'far fa-times'
+	        } });
+		
+	    
+
+	    
+	</script>
+	
+</body>
+</html>
+

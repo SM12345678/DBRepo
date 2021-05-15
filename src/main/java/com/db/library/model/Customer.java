@@ -49,6 +49,8 @@ public class Customer {
 	
 	private String emailAddress;
 	
+	private String ResetPasswordToken;
+	
 	 @Column(nullable = false, length = 64)
 	 private String password;
 	     
@@ -138,5 +140,13 @@ public class Customer {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public String getResetPasswordToken() {
+		return ResetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		ResetPasswordToken = resetPasswordToken;
 	}
 }

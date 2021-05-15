@@ -1,7 +1,8 @@
 
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+
+<head th:insert="index :: header">
 <title>RTL Library</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <style type="text/css">
@@ -35,6 +36,7 @@
 
 </head>
 <body>
+<nav th:insert="index :: nav-header"> </nav>
 	<h1>Rental Payment</h1>
 	<hr />
 	
@@ -72,7 +74,9 @@
 	</form>
 
 	
-
+	<span th:insert="index::footer">
+	</span>
+	
 
 </body>
 </html>

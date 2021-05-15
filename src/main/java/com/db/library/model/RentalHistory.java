@@ -33,6 +33,7 @@ public class RentalHistory {
 
 	public int rid;
 	public int cusid;
+	public String cusEmailId;
 	public int bookid;
 	public int bokcopyid;
 	public int Status;

@@ -88,6 +88,7 @@ public class RentalController {
 
 	@RequestMapping(value = "/a/rentals", method = RequestMethod.GET)
 	public String booksListwithStatus(Model model,Principal p) {
+
 		int customerId = customerRepository.findByEmailAddress(p.getName()).getId();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -181,51 +182,63 @@ public class RentalController {
 		 session = sessionFactory.openSession();
 		 tx = session.beginTransaction(); // id=String.valueOf(model.getAttribute("id"));
 
-		List<Tuple> tupleResult = rentalRepository.findrentalListForCustomer(customerId);
-		List<RentalHistory> rentals = new ArrayList<RentalHistory>();
-		for (Tuple t : tupleResult) {
-			RentalHistory r = new RentalHistory();
-			r.rid = Integer.parseInt(String.valueOf(t.get(0)));
-			r.cusid = Integer.parseInt(String.valueOf(t.get(1)));
-			r.bookid = Integer.parseInt(String.valueOf(t.get(2)));
-			r.bookName = bookRepository.getOne(r.bookid).getBookName();
-			r.authorsString = bookRepository.getOne(r.bookid).getAuthorsString();
-			r.topicName = bookRepository.getOne(r.bookid).getTopic().getTopicName();
-			r.copyid = Integer.parseInt(String.valueOf(t.get(3)));
-			r.status = Integer.parseInt(String.valueOf(t.get(4)));
-			Rental rental=rentalRepository.findById(r.rid).get();
-			r.actualreturndate=(rental.getActualreturndate()!=null)?rental.getActualreturndate().toString():"";
-			r.borrowdate=rental.getBorrowdate().toString();
-			r.expectedreturndate=rental.getExpectedreturndate().toString();
-			
-			if(r.status==0)
-			r.StatusText="Returned";
-			
-			if(r.status==1)
-				r.StatusText="Over Due";
-			
-			if(r.status==2)
-				r.StatusText="Not Over Due";
-				
-			if (r.status != 0) {
-				r.isamountPending = true;
+		 List<Tuple> tupleResult=null;
+		 if(customerRepository.findByEmailAddress(p.getName()).getIsAdmin()!=null)
+			{
+			 tupleResult =rentalRepository.findrentalListForCustomer(0);
 			}
-			rentals.add(r);
-		}
+			else{
+			 tupleResult = rentalRepository.findrentalListForCustomer(customerId);
+			}
+			
+			
+			List<RentalHistory> rentals = new ArrayList<RentalHistory>();
+			if(tupleResult!=null && tupleResult.size()>0) {
+			for (Tuple t : tupleResult) {
+				RentalHistory r = new RentalHistory();
+				r.rid = Integer.parseInt(String.valueOf(t.get(0)));
+				r.cusid = Integer.parseInt(String.valueOf(t.get(1)));
+				r.bookid = Integer.parseInt(String.valueOf(t.get(2)));
+				r.bookName = bookRepository.getOne(r.bookid).getBookName();
+				r.authorsString = bookRepository.getOne(r.bookid).getAuthorsString();
+				r.topicName = bookRepository.getOne(r.bookid).getTopic().getTopicName();
+				r.copyid = Integer.parseInt(String.valueOf(t.get(3)));
+				r.status = Integer.parseInt(String.valueOf(t.get(4)));
+				Rental rental=rentalRepository.findById(r.rid).get();
+				r.actualreturndate=(rental.getActualreturndate()!=null)?rental.getActualreturndate().toString():"";
+				r.borrowdate=rental.getBorrowdate().toString();
+				r.expectedreturndate=rental.getExpectedreturndate().toString();
+				r.cusEmailId=customerRepository.findById(r.cusid).get().getEmailAddress();
+				
+				if(r.status==0)
+				r.StatusText="Returned";
+				
+				if(r.status==1)
+					r.StatusText="Over Due";
+				
+				if(r.status==2)
+					r.StatusText="Not Over Due";
+					
+				if (r.status != 0) {
+					r.isamountPending = true;
+				}
+				rentals.add(r);
+			}
 
-		tx.commit();
-		session.close();
-
+			tx.commit();
+			session.close();
+			
+			}
 		model.addAttribute("rentals", rentals);
 
 		bookList.forEach(f -> f.setAuthorsString());
 		bookList.forEach(f -> f.setBookStatus());
 		model.addAttribute("books", bookList);
 		model.addAttribute("custid", customerId);
-		model.addAttribute("rentals", rentals);
+		//model.addAttribute("rentals", rentals);
 
 		
-		return "rental_history";
+		return "redirect:/a/rental/cust/history/";
 	}
 
 	@RequestMapping(value = "/a/rental/cust/history", method = RequestMethod.GET)
@@ -233,9 +246,17 @@ public class RentalController {
 		int customerId = customerRepository.findByEmailAddress(p.getName()).getId();
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction(); // id=String.valueOf(model.getAttribute("id"));
-
-		List<Tuple> tupleResult = rentalRepository.findrentalListForCustomer(customerId);
+		List<Tuple> tupleResult=null;
+		if(customerRepository.findByEmailAddress(p.getName()).getIsAdmin()!=null)
+		{
+		 tupleResult =rentalRepository.findrentalListForCustomer(0);
+		}
+		else{
+		 tupleResult = rentalRepository.findrentalListForCustomer(customerId);
+		}
+		
 		List<RentalHistory> rentals = new ArrayList<RentalHistory>();
+		if(tupleResult!=null && tupleResult.size()>0) {
 		for (Tuple t : tupleResult) {
 			RentalHistory r = new RentalHistory();
 			r.rid = Integer.parseInt(String.valueOf(t.get(0)));
@@ -250,6 +271,7 @@ public class RentalController {
 			r.actualreturndate=(rental.getActualreturndate()!=null)?rental.getActualreturndate().toString():"";
 			r.borrowdate=rental.getBorrowdate().toString();
 			r.expectedreturndate=rental.getExpectedreturndate().toString();
+			r.cusEmailId=customerRepository.findById(r.cusid).get().getEmailAddress();
 			
 			if(r.status==0)
 			r.StatusText="Returned";
@@ -268,6 +290,7 @@ public class RentalController {
 
 		tx.commit();
 		session.close();
+		}
 
 		model.addAttribute("rentals", rentals);
 
@@ -285,19 +308,19 @@ public class RentalController {
 		Rental rental = rentalRepository.save(r);
 		Invoice in=new Invoice();
 		 
-		 if(rental.getActualreturndate().compareTo(new Date(System.currentTimeMillis()))>0 ||rental.getActualreturndate().compareTo(new Date(System.currentTimeMillis()))<0)
+		 if(rental.getExpectedreturndate().compareTo(new Date(System.currentTimeMillis()))>=0)
 		 {
 			 
-			 long ddifference_In_Days =((rental.getBorrowdate().getTime()- new Date(System.currentTimeMillis()).getTime())/ (1000 * 60 * 60 * 24))% 365;
+			 long ddifference_In_Days =-((rental.getBorrowdate().getTime()- new Date(System.currentTimeMillis()).getTime())/ (1000 * 60 * 60 * 24))% 365;
              in.setInvoiceamount(ddifference_In_Days*0.2);
 		 }
 		 else {
 			 
-			 long ddifference_In_Days = ((rental.getActualreturndate().getTime()- new Date(System.currentTimeMillis()).getTime())/ (1000 * 60 * 60 * 24))% 365;
+			 long ddifference_In_Days = -((rental.getExpectedreturndate().getTime()- new Date(System.currentTimeMillis()).getTime())/ (1000 * 60 * 60 * 24))% 365;
 			 
-			 long ddifference_In_Days1 =((rental.getBorrowdate().getTime()- rental.getActualreturndate().getTime())/ (1000 * 60 * 60 * 24))% 365;
+			 long ddifference_In_Days1 =-((rental.getBorrowdate().getTime()- rental.getExpectedreturndate().getTime())/ (1000 * 60 * 60 * 24))% 365;
 
-             in.setInvoiceamount(ddifference_In_Days*0.2+ddifference_In_Days1*0.4);
+             in.setInvoiceamount(ddifference_In_Days*0.4+ddifference_In_Days1*0.2);
 		 }
 		 in.setRentalid(r.rentalid);
 		 in.setInvoicedate(new Date(System.currentTimeMillis()));
@@ -336,51 +359,9 @@ public class RentalController {
 		
 		tx.commit();
 		session.close();
+		return "redirect:/a/rental/cust/history/";
 		
-		session = sessionFactory.openSession();
-		tx = session.beginTransaction(); // id=String.valueOf(model.getAttribute("id"));
-		int customerId = customerRepository.findByEmailAddress(p.getName()).getId();
-		List<Tuple> tupleResult = rentalRepository.findrentalListForCustomer(customerId);
-		List<RentalHistory> rentals = new ArrayList<RentalHistory>();
-		for (Tuple t : tupleResult) {
-			RentalHistory r = new RentalHistory();
-			r.rid = Integer.parseInt(String.valueOf(t.get(0)));
-			r.cusid = Integer.parseInt(String.valueOf(t.get(1)));
-			r.bookid = Integer.parseInt(String.valueOf(t.get(2)));
-			r.bookName = bookRepository.getOne(r.bookid).getBookName();
-			r.authorsString = bookRepository.getOne(r.bookid).getAuthorsString();
-			r.topicName = bookRepository.getOne(r.bookid).getTopic().getTopicName();
-			r.copyid = Integer.parseInt(String.valueOf(t.get(3)));
-			r.status = Integer.parseInt(String.valueOf(t.get(4)));
-			Rental rental=rentalRepository.findById(r.rid).get();  
-			r.actualreturndate=(rental.getActualreturndate()!=null)?rental.getActualreturndate().toString():"";
-			r.borrowdate=rental.getBorrowdate().toString();
-			r.expectedreturndate=rental.getExpectedreturndate().toString();
-			if (r.status != 0) {
-				r.isamountPending = true;
-			}
-			rentals.add(r);
-			if(r.status==0)
-				r.StatusText="Returned";
-				
-				if(r.status==1)
-					r.StatusText="Over Due";
-				
-				if(r.status==2)
-					r.StatusText="Not Over Due";
-					
-				if (r.status != 0) {
-					r.isamountPending = true;
-				}
-		}
 
-		tx.commit();
-		session.close();
-
-		model.addAttribute("rentals", rentals);
-
-		
-		return "rental_history";
 	}
 
 }

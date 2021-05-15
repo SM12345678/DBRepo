@@ -17,7 +17,9 @@
 			<th>Book Copy Id(s)</th>
 			<th>Borrowed Date</th>
 			<th>Expected Return Date</th>
-			<th>Actual Return Date</th>
+			 <th>Actual Return Date</th>
+			 <th sec:authorize="hasAuthority('ADMIN')">Customer Email Id</th>
+			
 		</tr>
 		<tr th:each="rental : ${rentals}">
 		     <td th:text="${rental.StatusText}"></td>
@@ -29,7 +31,8 @@
 			 <td th:text="${rental.borrowdate}"></td>
 			 <td th:text="${rental.expectedreturndate}"></td>
 			 <td th:text="${rental.actualreturndate}"></td>
-			 <td th:if="${rental.isamountPending}"> <a th:href=@{http://localhost:8080/a/rentals/payment(id=${rental.rid})} >Return Book</a></td>
+			  <td th:text="${rental.cusEmailId}" sec:authorize="hasAuthority('ADMIN')"></td>
+			  <td th:if="${rental.isamountPending}"> <a th:href=@{http://localhost:8080/a/rentals/payment(id=${rental.rid})} >Return Book</a></td>
 		</tr>
 	</table>
 	<hr />
@@ -37,5 +40,6 @@
 <div class="container">
 	<span th:insert="index::footer">
 	</span>
+	</div>
 </body>
 </html>

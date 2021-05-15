@@ -30,7 +30,7 @@
                              
                             </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/a/books}">Books</a></li>
+                        <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/a/books}">Books</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/a/rentals}">Rentals</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/a/authors}">Authors</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/a/events}">Events</a></li>
@@ -40,8 +40,9 @@
                         <li class="nav-item"><a class="nav-link" th:href="@{/a/sponsors}">Sponsors</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/a/topics}">Topics</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/register}">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
                            <li class="nav-item"><a class="nav-link" th:href="@{/a/bookRoom}"> Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li> 
+                        <li class="nav-item"><a class="nav-link" th:href="@{/sendmail}">Reset Password</a></li> 
                         <li class="nav-item"><a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a></li>
                     </ul>
                 </div>

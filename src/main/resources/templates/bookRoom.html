@@ -1,18 +1,46 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+ <script type="text/javascript" language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script type="text/javascript" language="javascript">
+
+function reserve(id){
+    $.ajax({
+     type: "get",
+     url: "http://localhost:8080/a/room/makereservation",
+     cache: false,  
+     type:"get",
+     data:'roomId=' + id + "&bookingdate=" + $("#bookingdate"+id).val() + "&bookingslot=" + $("#bookingslot"+id).val(),
+     success: function(response){
+    	 debugger
+    	 $("#bookingmessage"+id).show();
+   $("#bookingmessage"+id).html("reservation done for room:"+id+" bookingdate: "+$("#bookingdate"+id).val()+" bookingslot: "+$("#bookingslot"+id).val());
+      //.setAttribute("text","reservation done for room:"+id);
+   //   $('#bookingmessage'+id).se("text","reservation done for room:"+id);
+     },
+     error: function(){      
+      alert('Error while request..Select Amother slot');
+     }
+    });
+   }
+
+	</script>
+ 
 <head th:insert="index :: header"> 
 <title>RTL Library</title>	
+
+
 </head>
 <body>
 <nav th:insert="index :: nav-header"> </nav>
 
+		
 	<div class="container">
 		<h3>Rooms</h3>
 		<table class="table">
 			<tr>
 				<th>Room Number</th>
 				<th>Room Capacity</th>
-				<th>Booking Date</th>
+				<th>Booking Date(yyyy-mm-dd)</th>
 				<th>Booking Slots</th>
 			</tr>
 			<tr th:each="room : ${listOfRooms}">
@@ -20,24 +48,28 @@
 				<td th:text="${room.roomCapacity}"></td>
 				<td>
 							  
-				  <input class="form-control" id="eventStartDatetime"  name="eventStartDatetime">
+				  <input class="form-control" th:id="'bookingdate' + ${room.roomId}"    name="eventStartDatetime">
 		
 				</td>
 				<td>
 
-				<select id="bookingslot" multiple="true">
-				<option value="3" selected="selected">nothing selected</option>
-					<option value="">8 AM to 10 PM</option>
-			        <option value="1">11 AM to 13 PM</option>
-			        <option value="2">13 PM to 15 PM</option>
-			          <option value="2">16 PM to 18 PM</option>
+				<select th:id="'bookingslot' + ${room.roomId}">
+				<option value="0" selected="selected">nothing selected</option>
+					<option value="1">Slot 1: 8 AM to 10 PM</option>
+			        <option value="2">Slot 2: 11 AM to 13 PM</option>
+			        <option value="3">Slot 3: 13 PM to 15 PM</option>
+			          <option value="4">Slot 4: 16 PM to 18 PM</option>
 			        
 				</select>
 		
 				</td>
 				<td>
-				<input class="btn btn-primary" type="submit" value="Reserve Room" name="button"/>
+				<!--   <a class="btn btn-primary" type="button" th:href="'/a/events/bookRoom?roomId=' + ${room.roomId}+''+${room}" name="button">
+					Join
+				  </a> -->
+				<input class="btn btn-primary" type="submit" value="Reserve Room" name="button" th:onclick="|reserve('${room.roomId}')|"/>
 					</td>
+					<td><div class="alert alert-primary" style="display:none;" role="alert" th:id="'bookingmessage' + ${room.roomId}"></div></td>
 			<!-- 	<td>
 				<select id="bookingslot" th:field="*{bookingSlot}" multiple="true">
 					<option value="">nothing selected</option>
@@ -51,8 +83,8 @@
 	</div>
 	<hr/>
 	
-	<div class="container" sec:authorize="hasAuthority('ADMIN')" >
-		<form th:action="@{/a/bookRoom}" method="post" enctype="multipart/form-data">
+	<div class="container"  >
+		<form th:action="@{/a/bookRoom}" method="post" enctype="multipart/form-data" sec:authorize="hasAuthority('ADMIN')">
 			<div class="row">
 				<div class="col-md-6">
 				  <label for="rcapacity" class="form-label">Room Capacity</label>
@@ -67,24 +99,7 @@
 	</div>
 	<span th:insert="index::footer">
 	</span>
-	<script>
-	    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
-	        icons: {
-	            time: 'far fa-clock',
-	            date: 'far fa-calendar',
-	            up: 'fas fa-arrow-up',
-	            down: 'fas fa-arrow-down',
-	            previous: 'fas fa-chevron-left',
-	            next: 'fas fa-chevron-right',
-	            today: 'far fa-calendar-check-o',
-	            clear: 'far fa-trash',
-	            close: 'far fa-times'
-	        } });
-		
-	    
-
-	    
-	</script>
+	
 	
 </body>
 </html>
